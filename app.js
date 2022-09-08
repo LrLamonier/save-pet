@@ -9,10 +9,12 @@ const globalErrorHandler = require("./controllers/errorController");
 // app Express
 const app = express();
 
+// habilitar cors
 app.enable("trust proxy");
 app.use(cors());
 app.options("*", cors());
 
+// limitar tamanho dos requests
 app.use(
   express.json({
     limit: "10kb",
