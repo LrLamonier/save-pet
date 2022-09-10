@@ -27,6 +27,11 @@ router.patch("/profile", authController.protect, userController.editProfile);
 // router.get('teste', (req, res) =>{
 //     res.render()
 // })
+
+router.get('/', [],(req, res, next) => {
+    res.send(`Save Pet`)
+})
+
 router.post('/teste-banco', async (req, res, next) =>{
     await UsuarioTeste.create(req, res, next)
 })
