@@ -2,9 +2,12 @@ const express = require("express");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 const UsuarioTeste = require("../controllers/UsuarioTeste");
+const Auth = require("../middlewares/Auth");
 
 const router = express.Router();
 
+//route user
+router.get("/", (req,res) => res.send(`Rota User`))
 // criar conta
 router.post("/signup", authController.signup);
 
@@ -27,10 +30,6 @@ router.patch("/profile", authController.protect, userController.editProfile);
 // router.get('teste', (req, res) =>{
 //     res.render()
 // })
-
-router.get('/', [],(req, res, next) => {
-    res.send(`Save Pet`)
-})
 
 router.post('/teste-banco', async (req, res, next) =>{
     await UsuarioTeste.create(req, res, next)

@@ -1,6 +1,9 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger/swagger_output.json');
 const xss = require("xss-clean");
 
 const userRoute = require("./routes/userRoutes");
@@ -21,6 +24,10 @@ app.use(
   })
 );
 
+// habilitar Body Parser
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
+
 // leitura de cookies para autenticação
 app.use(cookieParser());
 
@@ -34,9 +41,15 @@ app.use((req, res, next) => {
 });
 
 // rotas
+app.get('/', (req, res) => {
+  res.send(`Save Pet`)
+})
 app.use("/user", userRoute);
 
 // manipulação de erros
 app.use(globalErrorHandler);
+
+//documentação
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 module.exports = app;

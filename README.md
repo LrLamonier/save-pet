@@ -5,10 +5,10 @@ Projeto que visa criar e manter uma rede colaborativa para resgatar, cuidar, e a
 
 ### Instalação:
 <!-- `npm i axios bcryptjs body-parser code config cors express mongoose mustache-express router` -->
-`npm i cookie-parser cors dotenv express jsonwebtoken mysql2 sequelize sequelize-cli validator xss-clean`
+`npm i body-parser cookie-parser cors dotenv express jsonwebtoken mysql2 sequelize sequelize-cli swagger-autogen swagger-ui-express validator xss-clean`
 
 ### Dependẽncias de desenvolvimento
-`npm i jest nodemon --save-dev`
+`npm i jest nodemon supertest --save-dev`
 
 ### Para rodar o projeto:
 `npm run start`
