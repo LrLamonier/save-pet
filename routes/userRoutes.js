@@ -12,7 +12,7 @@ router.get("/", (req,res) => res.send(`Rota User`))
 router.post("/signup", authController.signup);
 
 // login
-router.post("/login", authController.login);
+router.post("/login", Auth.private, authController.login);
 
 // logout
 router.post("/logout", authController.logout);
