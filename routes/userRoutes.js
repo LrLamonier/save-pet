@@ -1,18 +1,21 @@
 const express = require("express");
+const User = require("../models/usuarioPessoa");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 const UsuarioTeste = require("../controllers/UsuarioTeste");
-const Auth = require("../middlewares/Auth");
+// const Auth = require("../middlewares/Auth");
+const AuthValidator = require("../validators/AuthValidator")
 
 const router = express.Router();
 
 //route user
-router.get("/", (req,res) => res.send(`Rota User`))
+router.get("/", userController.allUsers);
+
 // criar conta
 router.post("/signup", authController.signup);
 
 // login
-router.post("/login", Auth.private, authController.login);
+router.post("/login", authController.login);
 
 // logout
 router.post("/logout", authController.logout);
