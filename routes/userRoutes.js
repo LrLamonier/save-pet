@@ -9,6 +9,7 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 //route user
+<<<<<<< HEAD
 router.get("/", userController.allUsers);
 
 // criar conta
@@ -21,6 +22,19 @@ router.get("/", userController.allUsers);
 // router.post("/logout", authController.logout);
 
 // deletar conta
+=======
+router.get("/", userController.allUsers)
+// criar conta
+// router.post("/signup", authController.signup);
+
+// // login
+// router.post("/login", authController.login);
+
+// // logout
+// router.post("/logout", authController.logout);
+
+// // deletar conta
+>>>>>>> 2ee9a45 (recriação de rotas)
 // router.delete("/delete-account", authController.deleteAccount);
 
 // ver perfil

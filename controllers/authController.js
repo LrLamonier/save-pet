@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 const AppError = require("../utils/appError");
 const { validationResult, matchedData } = require('express-validator')
 
+=======
+// const AppError = require("../utils/appError");
+>>>>>>> 2ee9a45 (recriação de rotas)
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
