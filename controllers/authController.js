@@ -1,5 +1,6 @@
-// const AppError = require("../utils/appError");
+const AppError = require("../utils/appError");
 const { validationResult, matchedData } = require('express-validator')
+
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
@@ -52,11 +53,11 @@ const createSendToken = (user, statusCode, req, res) => {
 
 //////////////////////////////////////////////////////////
 // criação de conta
-
 exports.signup = async(req,res,next) => {
   // validate
   if (await User.findOne({ where: { name: params.name } })) {
-      throw 'Name "' + params.user + '" is already taken';
+      // throw 'Name "' + params.user + '" is already taken';
+      return next(new AppError("Usuário já cadastrado", 400));
   }
 
   // hash password
@@ -66,6 +67,9 @@ exports.signup = async(req,res,next) => {
 
   // save user
   await User.create(params);
+  
+  // response
+  res.status(201).json({message: "Usuário criado com sucesso!"};
 }
 
 // exports.signup = catchAsync(async (req, res, next) => {
@@ -126,10 +130,21 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // encontrar usuário no banco de dados
-  // const user = encontrar objeto usuário
-  let user;
+  const user = await User.findOne({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    return next(new AppError("Email não cadastrado!", 404));
+  }
 
   // validar se a senha está correta
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    return next(new AppError("Usuário ou senha inválidos!", 401));
+  }
 
   // enviar JWT
   createSendToken(user, 200, req, res);
@@ -148,6 +163,11 @@ exports.logout = (_, res) => {
 // deletar conta
 exports.deleteAccount = catchAsync(async (req, res, next) => {
   // encontrar o usuário no banco de dados e deletar
+  await User.destroy({
+    where: {
+      id: req.user.id,
+    },
+  });
 
   // fazer logout
   res.cookie("jwt", "loggedout", {
@@ -183,8 +203,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // buscar no banco de dados a ID do usuário
-  // const currentUser = inserir código para buscar o usuário aqui
-  let currentUser;
+  const currentUser = await User.findOne({ id: decoded });
 
   // retornar erro de acesso negado caso o usuário não exista
   if (!currentUser) {
