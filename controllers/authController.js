@@ -1,17 +1,15 @@
-<<<<<<< HEAD
 const AppError = require("../utils/appError");
 const { validationResult, matchedData } = require('express-validator')
 
-=======
 // const AppError = require("../utils/appError");
->>>>>>> 2ee9a45 (recriação de rotas)
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const {check } = require('express-validator')
 const validator = require("validator");
 const { promisify } = require("util");
 
-const User = require('../models/usuarioPessoa');
+const User = require('../models/connectDB');
 
 // criar JWT
 const signToken = (id) => {
@@ -57,72 +55,57 @@ const createSendToken = (user, statusCode, req, res) => {
 
 //////////////////////////////////////////////////////////
 // criação de conta
-exports.signup = async(req,res,next) => {
-  // validate
-  if (await User.findOne({ where: { name: params.name } })) {
-      // throw 'Name "' + params.user + '" is already taken';
-      return next(new AppError("Usuário já cadastrado", 400));
-  }
+// exports.signup = async(req,res,next) => {
+//   // validate
+//   if (await User.findOne({ where: { name: params.name } })) {
+//       // throw 'Name "' + params.user + '" is already taken';
+//       return next(new AppError("Usuário já cadastrado", 400));
+//   }
 
-  // hash password
-  if (params.password) {
-      params.hash = await bcrypt.hash(params.password, 10);
-  }
+//   // hash password
+//   if (params.password) {
+//       params.hash = await bcrypt.hash(params.password, 10);
+//   }
 
-  // save user
-  await User.create(params);
+//   // save user
+//   await User.create(params);
   
-  // response
-  res.status(201).json({message: "Usuário criado com sucesso!"};
-}
+//   // response
+//   res.status(201).json({message: "Usuário criado com sucesso!"};
+// }
 
-// exports.signup = catchAsync(async (req, res, next) => {
-  // procurar usuário no banco de dados
-  // const user = await procurarUsuárioNoBancoDeDados
-//   let user;
-
-//   // validar campos input
-//   if (user) {
-//     next(new AppError("Este e-mail já está cadastrado!", 400));
-//   }
-
-//   if (!req.body.name) {
-//     next(new AppError("Nome inválido!", 400));
-//   }
-
-//   if (!validator.isEmail(req.body.email)) {
-//     next(new AppError("Email inválido!", 400));
-//   }
-
-//   const validatePassword = (password) => {
-//     // regras para a senha
-//     return (
-//       password.length >= 8 &&
-//       validator.isWhiteListed(
-//         password,
-//         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXWYZ!@#$%&*()_-+=0123456789"
-//       )
-//     );
-//   };
-
-//   if (!validatePassword(req.body.password)) {
-//     return next(new AppError("Senha inválida!", 400));
-//   }
-
-//   if (req.body.password !== req.body.passwordConfirm) {
-//     return next(new AppError("As senhas não conferem!", 400));
-//   }
-
-//   // criar novo usuário
-//   //   const newUser = objeto do novo usuário
-//   let newUser;
-
-//   // envio de e-mail de confirmação de conta
-
-//   // envio do token JWT
-//   createSendToken(newUser, 201, req, res);
-// });
-
+exports.signup = ( [
+  check('name', 'Insira seu nome, por favor').not().isEmpty(),
+  check('email', 'Esse e-mail não é válido').isEmail(),
+  check('password', 'A senha deve ter entre 6 e 8 caracteres').isLength({min:6}),
+  check('contato', 'Insira um contato válido, por favor').not().isEmpty(),
+  ], async (req, res, next) => {
+  
+  try {
+      let { name, email, password, contato } = req.body
+      const errors = validationResult(req)
+      console.error(errors)
+      if(!errors.isEmpty()){
+          return res.status(400).json({errors: errors.array()})
+      }else{
+          let user = new User( {name, email, password, contato })
+          const salt = await bcrypt.genSalt(10)
+          user.password = await bcrypt.hash(password, salt)
+          await user.save()
+          const payload = {
+              user: {
+                  id: user.id
+              }
+          }
+          if(user.id){
+              res.json(user)
+          }
+      }
+  } catch (err) {
+      console.error(err.message)
+      res.status(500).send({"error" : "Server Error"})
+  }
+})
 
 //////////////////////////////////////////////////////////
 // login

@@ -1,6 +1,6 @@
 // const AppError = require("../utils/appError");
-<<<<<<< HEAD
 const express = require('express');
+const bcrypt = require('bcrypt')
 // const catchAsync = require("../utils/catchAsync");
 //Apontamento antigo de conexão ao banco
 // const db = require('../models/index');
@@ -54,9 +54,8 @@ exports.allUsers = ('/', async(req, res, next) => {
 //     telephone: user.telephone,
 //   };
 
-=======
-const catchAsync = require("../utils/catchAsync");
-const User = require("../models/usuarioPessoa")
+// const catchAsync = require("../utils/catchAsync");
+// const User = require("../models/usuarioPessoa")
 
 module.exports = {
   allUsers: async (req,res,next) => {
@@ -101,7 +100,6 @@ module.exports = {
 //     telephone: user.telephone,
 //   };
 
->>>>>>> 2ee9a45 (recriação de rotas)
 //   // resposta
 //   res.status(200).json({
 //     status: "success",
@@ -111,15 +109,12 @@ module.exports = {
 //   });
 // });
 
-<<<<<<< HEAD
 //////////////////////////////////////////////////////////
 // editar perfil
 // exports.editProfile = catchAsync(async (req, res, next) => {
-=======
 // //////////////////////////////////////////////////////////
 // // editar perfil
 // editProfile = catchAsync(async (req, res, next) => {
->>>>>>> 2ee9a45 (recriação de rotas)
 //   const { name, email, telephone } = req.body;
 
 //   // fazer alterações no usuário no banco de dados
@@ -134,3 +129,6 @@ module.exports = {
 //     data: { user: updatedUser },
 //   });
 // });
+
+
+
