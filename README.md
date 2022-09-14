@@ -15,3 +15,10 @@ Projeto que visa criar e manter uma rede colaborativa para resgatar, cuidar, e a
 
 ### Para documentação:
 http://localhost:8000/doc/
+
+## Postman
+# Rota de get de todos os usuários
+
+
+# Rota de signup
+https://www.getpostman.com/collections/fe3f2eb13cb9af3ec281
