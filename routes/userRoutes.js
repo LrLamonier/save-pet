@@ -1,38 +1,41 @@
 const express = require("express");
-const authController = require("../controllers/authController");
+// const User = require("../models/usuarioPessoa");
+// const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
-const UsuarioTeste = require("../controllers/UsuarioTeste");
-const Auth = require("../middlewares/Auth");
+// const UsuarioTeste = require("../controllers/UsuarioTeste");
+// const Auth = require("../middlewares/Auth");
+// const AuthValidator = require("../validators/AuthValidator")
 
 const router = express.Router();
 
 //route user
-router.get("/", (req,res) => res.send(`Rota User`))
+router.get("/", userController.allUsers);
+
 // criar conta
-router.post("/signup", authController.signup);
+// router.post("/signup", authController.signup);
 
 // login
-router.post("/login", authController.login);
+// router.post("/login", authController.login);
 
 // logout
-router.post("/logout", authController.logout);
+// router.post("/logout", authController.logout);
 
 // deletar conta
-router.delete("/delete-account", authController.deleteAccount);
+// router.delete("/delete-account", authController.deleteAccount);
 
 // ver perfil
-router.get("/profile", authController.protect, userController.getMe);
+// router.get("/profile", authController.protect, userController.getMe);
 
 // editar perfil
-router.patch("/profile", authController.protect, userController.editProfile);
+// router.patch("/profile", authController.protect, userController.editProfile);
 
 //Rota de teste do banco Vando
 // router.get('teste', (req, res) =>{
 //     res.render()
 // })
 
-router.post('/teste-banco', async (req, res, next) =>{
-    await UsuarioTeste.create(req, res, next)
-})
+// router.post('/teste-banco', async (req, res, next) =>{
+//     await UsuarioTeste.create(req, res, next)
+// })
 
 module.exports = router;

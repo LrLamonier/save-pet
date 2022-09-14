@@ -1,10 +1,13 @@
 const AppError = require("../utils/appError");
+const { validationResult, matchedData } = require('express-validator')
+
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
 const validator = require("validator");
 const { promisify } = require("util");
 
-const User = require("../models/usuarioPessoa");
+const User = require('../models/usuarioPessoa');
 
 // criar JWT
 const signToken = (id) => {
@@ -50,53 +53,72 @@ const createSendToken = (user, statusCode, req, res) => {
 
 //////////////////////////////////////////////////////////
 // criação de conta
-exports.signup = catchAsync(async (req, res, next) => {
+exports.signup = async(req,res,next) => {
+  // validate
+  if (await User.findOne({ where: { name: params.name } })) {
+      // throw 'Name "' + params.user + '" is already taken';
+      return next(new AppError("Usuário já cadastrado", 400));
+  }
+
+  // hash password
+  if (params.password) {
+      params.hash = await bcrypt.hash(params.password, 10);
+  }
+
+  // save user
+  await User.create(params);
+  
+  // response
+  res.status(201).json({message: "Usuário criado com sucesso!"};
+}
+
+// exports.signup = catchAsync(async (req, res, next) => {
   // procurar usuário no banco de dados
-
   // const user = await procurarUsuárioNoBancoDeDados
-  let user;
+//   let user;
 
-  // validar campos input
-  if (user) {
-    next(new AppError("Este e-mail já está cadastrado!", 400));
-  }
+//   // validar campos input
+//   if (user) {
+//     next(new AppError("Este e-mail já está cadastrado!", 400));
+//   }
 
-  if (!req.body.name) {
-    next(new AppError("Nome inválido!", 400));
-  }
+//   if (!req.body.name) {
+//     next(new AppError("Nome inválido!", 400));
+//   }
 
-  if (!validator.isEmail(req.body.email)) {
-    next(new AppError("Email inválido!", 400));
-  }
+//   if (!validator.isEmail(req.body.email)) {
+//     next(new AppError("Email inválido!", 400));
+//   }
 
-  const validatePassword = (password) => {
-    // regras para a senha
-    return (
-      password.length >= 8 &&
-      validator.isWhiteListed(
-        password,
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXWYZ!@#$%&*()_-+=0123456789"
-      )
-    );
-  };
+//   const validatePassword = (password) => {
+//     // regras para a senha
+//     return (
+//       password.length >= 8 &&
+//       validator.isWhiteListed(
+//         password,
+//         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXWYZ!@#$%&*()_-+=0123456789"
+//       )
+//     );
+//   };
 
-  if (!validatePassword(req.body.password)) {
-    return next(new AppError("Senha inválida!", 400));
-  }
+//   if (!validatePassword(req.body.password)) {
+//     return next(new AppError("Senha inválida!", 400));
+//   }
 
-  if (req.body.password !== req.body.passwordConfirm) {
-    return next(new AppError("As senhas não conferem!", 400));
-  }
+//   if (req.body.password !== req.body.passwordConfirm) {
+//     return next(new AppError("As senhas não conferem!", 400));
+//   }
 
-  // criar novo usuário
-  //   const newUser = objeto do novo usuário
-  let newUser;
+//   // criar novo usuário
+//   //   const newUser = objeto do novo usuário
+//   let newUser;
 
-  // envio de e-mail de confirmação de conta
+//   // envio de e-mail de confirmação de conta
 
-  // envio do token JWT
-  createSendToken(newUser, 201, req, res);
-});
+//   // envio do token JWT
+//   createSendToken(newUser, 201, req, res);
+// });
+
 
 //////////////////////////////////////////////////////////
 // login
