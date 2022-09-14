@@ -1,6 +1,6 @@
 const express = require("express");
 // const User = require("../models/usuarioPessoa");
-// const authController = require("../controllers/authController");
+const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 // const UsuarioTeste = require("../controllers/UsuarioTeste");
 // const Auth = require("../middlewares/Auth");
@@ -8,11 +8,11 @@ const userController = require("../controllers/userController");
 
 const router = express.Router();
 
-//route user
+//buscar usuários
 router.get("/", userController.allUsers);
 
 // criar conta
-// router.post("/signup", authController.signup);
+router.post("/signup", authController.signup);
 
 // login
 // router.post("/login", authController.login);

@@ -12,3 +12,6 @@ Projeto que visa criar e manter uma rede colaborativa para resgatar, cuidar, e a
 
 ### Para rodar o projeto:
 `npm run start`
+
+### Para documentação:
+http://localhost:8000/doc/
