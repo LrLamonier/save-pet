@@ -1,6 +1,6 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const { Adocao } = require("../models/connectDB");
+const { Adocao } = require("../models/User");
 
 // cadastrar adoção
 exports.newAdopt = catchAsync(async (req, res, next) => {

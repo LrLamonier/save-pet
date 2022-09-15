@@ -1,29 +1,24 @@
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize('savepet_db', 'root', '', {
-    host: "localhost",
-    dialect: 'mysql'
-})
+const db = require("../config/db")
 
-const User = sequelize.define('users', {
+const User = db.sequelize.define('users', {
     id: {
-        type: Sequelize.INTEGER,
+        type: db.Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     name: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     email: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     contato: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     password: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     }
 })
-
 
 module.exports = User
 

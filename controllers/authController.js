@@ -1,78 +1,105 @@
 const AppError = require("../utils/appError");
 const { validationResult, matchedData } = require('express-validator')
-
-// const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const {check } = require('express-validator')
-const validator = require("validator");
 const { promisify } = require("util");
+const User = require('../models/User');
 
-const User = require('../models/connectDB');
+// // criar JWT
+// const signToken = (id) => {
+//   return (
+//     jwt.sign({ id }, process.env.JWT_SECRET),
+//     {
+//       expiresIn: process.env.JWT_EXPIRES_IN,
+//     }
+//   );
+// };
 
-// criar JWT
-const signToken = (id) => {
-  return (
-    jwt.sign({ id }, process.env.JWT_SECRET),
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    }
-  );
-};
+// // enviar JWT
+// const createSendToken = (user, statusCode, req, res) => {
+//   const token = signToken(user.id); // colocar a id que identifica o usuário no banco de dados
 
-// enviar JWT
-const createSendToken = (user, statusCode, req, res) => {
-  const token = signToken(user.id); // colocar a id que identifica o usuário no banco de dados
+//   // configurar cookie
+//   const cookieOptions = {
+//     expires: new Date(
+//       Date.now() + process.env.JWT_EXPIRES_IN * 24 * 60 * 60 * 1000
+//     ),
+//     httpOnly: true,
+//   };
 
-  // configurar cookie
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-  };
+//   // inserir cookie na resposta
+//   res.cookie("jwt", token, cookieOptions);
 
-  // inserir cookie na resposta
-  res.cookie("jwt", token, cookieOptions);
+//   // remover a senha do usuário do corpo do request
+//   user.password = undefined;
 
-  // remover a senha do usuário do corpo do request
-  user.password = undefined;
+//   // preparar resposta, extrair dados do objeto user
+//   const resUser = {
+//     name: user.name,
+//     email: user.email,
+//   };
 
-  // preparar resposta, extrair dados do objeto user
-  const resUser = {
-    name: user.name,
-    email: user.email,
-  };
+//   // enviar resposta
+//   res.status(statusCode).json({
+//     status: "success",
+//     token,
+//     data: { resUser },
+//   });
+// };
 
-  // enviar resposta
-  res.status(statusCode).json({
-    status: "success",
-    token,
-    data: { resUser },
-  });
-};
+exports.auth = ([
+  check('email', 'e-mail is required').exists(),
+  check('password', 'senha is required').exists()
+], async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+  }
+  const { email, password } = req.body
 
-//////////////////////////////////////////////////////////
-// criação de conta
-// exports.signup = async(req,res,next) => {
-//   // validate
-//   if (await User.findOne({ where: { name: params.name } })) {
-//       // throw 'Name "' + params.user + '" is already taken';
-//       return next(new AppError("Usuário já cadastrado", 400));
-//   }
+  try {
+      const user = await User.findOne({
+        where: {
+        email,
+        password
+      }
+      },)
+      if(!user){ 
+          return res.status(401).send({ error: 'Usuário não encontrado' })    
+  }else{
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+          return res.status(400).json({ errors: [{ msg: 'Senha Incorreta' }] });
+      }else{
+          if (user.is_active == false){
+              return res.status(403).json({ errors: [{ msg: 'Esse usuário não está ativo' }] });
+          }
+          const payload = {
+              user: {
+                  id: user.id,
+                  name: user.name
+              }
+          }
 
-//   // hash password
-//   if (params.password) {
-//       params.hash = await bcrypt.hash(params.password, 10);
-//   }
+          jwt.sign( payload, config.get('jwtSecret'), { expiresIn: '5 days' },
+              (err, token) => {
+                  if (err) throw err;
+                  payload.token = token
+                  res.json(payload);
+              }
+          )
+      }
+  }
 
-//   // save user
-//   await User.create(params);
-  
-//   // response
-//   res.status(201).json({message: "Usuário criado com sucesso!"};
-// }
+}catch (err) {
+  console.error(err.message)
+  res.status(500).send('Server error')
+}
+
+})
+
 
 exports.signup = ( [
   check('name', 'Insira seu nome, por favor').not().isEmpty(),

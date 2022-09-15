@@ -1,7 +1,6 @@
 const express = require("express");
-const adoptController = require("../controllers/adoptController");
-
 const router = express.Router();
+const adoptController = require("../controllers/adoptController");
 
 // cadastrar adoção
 router.post("/", adoptController.newAdopt);
