@@ -24,8 +24,6 @@ router.post("/signup", authController.signup);
 
 // deletar conta
 router.get("/", userController.allUsers)
-// criar conta
-// router.post("/signup", authController.signup);
 
 // // login
 // router.post("/login", authController.login);

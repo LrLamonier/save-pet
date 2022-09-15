@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger/swagger_output.json");
+const hpp = require("hpp");
 const xss = require("xss-clean");
 
 const userRoute = require("./routes/userRoutes");
@@ -43,25 +44,24 @@ app.use((req, res, next) => {
 });
 
 // whitelist
-// app.use(
-//   hpp({
-//     whitelist: [
-//       "titulo",
-//       "tipo_pet",
-//       "descricao",
-//       "localizacao",
-//       "id_solicitante",
-//       "id_instituicao",
-//       "name",
-//       "email",
-//       "password",
-//       "passwordConfirm",
-//       "telephone",
-//       "cpf",
-//       "cnpj",
-//     ],
-//   })
-// );
+app.use(hpp({
+    whitelist: [
+      "titulo",
+      "tipo_pet",
+      "descricao",
+      "localizacao",
+      "id_solicitante",
+      "id_instituicao",
+      "name",
+      "email",
+      "password",
+      "passwordConfirm",
+      "telephone",
+      "cpf",
+      "cnpj",
+    ],
+  })
+);
 
 // rotas
 app.get("/", (req, res) => {
