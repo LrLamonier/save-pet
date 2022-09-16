@@ -1,9 +1,9 @@
 const AppError = require("../utils/appError");
-const { validationResult, matchedData } = require('express-validator')
+// const { validationResult, matchedData } = require('express-validator')
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
-const {check } = require('express-validator')
+const {check, validationResult } = require('express-validator')
 const { promisify } = require("util");
 const User = require('../models/User');
 
@@ -49,56 +49,56 @@ const User = require('../models/User');
 //   });
 // };
 
-exports.auth = ([
-  check('email', 'e-mail is required').exists(),
-  check('password', 'senha is required').exists()
-], async (req, res, next) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-  }
-  const { email, password } = req.body
+// exports.auth = ([
+//   check('email', 'e-mail is required').exists(),
+//   check('password', 'senha is required').exists()
+// ], async (req, res, next) => {
+//   const errors = validationResult(req)
+//   if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() })
+//   }
+//   const { email, password } = req.body
 
-  try {
-      const user = await User.findOne({
-        where: {
-        email,
-        password
-      }
-      },)
-      if(!user){ 
-          return res.status(401).send({ error: 'Usuário não encontrado' })    
-  }else{
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-          return res.status(400).json({ errors: [{ msg: 'Senha Incorreta' }] });
-      }else{
-          if (user.is_active == false){
-              return res.status(403).json({ errors: [{ msg: 'Esse usuário não está ativo' }] });
-          }
-          const payload = {
-              user: {
-                  id: user.id,
-                  name: user.name
-              }
-          }
+//   try {
+//       const user = await User.findOne({
+//         where: {
+//         email,
+//         password
+//       }
+//       },)
+//       if(!user){ 
+//           return res.status(401).send({ error: 'Usuário não encontrado' })    
+//   }else{
+//       const isMatch = await bcrypt.compare(password, user.password);
+//       if (!isMatch) {
+//           return res.status(400).json({ errors: [{ msg: 'Senha Incorreta' }] });
+//       }else{
+//           if (user.is_active == false){
+//               return res.status(403).json({ errors: [{ msg: 'Esse usuário não está ativo' }] });
+//           }
+//           const payload = {
+//               user: {
+//                   id: user.id,
+//                   name: user.name
+//               }
+//           }
 
-          jwt.sign( payload, config.get('jwtSecret'), { expiresIn: '5 days' },
-              (err, token) => {
-                  if (err) throw err;
-                  payload.token = token
-                  res.json(payload);
-              }
-          )
-      }
-  }
+//           jwt.sign( payload, config.get('jwtSecret'), { expiresIn: '5 days' },
+//               (err, token) => {
+//                   if (err) throw err;
+//                   payload.token = token
+//                   res.json(payload);
+//               }
+//           )
+//       }
+//   }
 
-}catch (err) {
-  console.error(err.message)
-  res.status(500).send('Server error')
-}
+// }catch (err) {
+//   console.error(err.message)
+//   res.status(500).send('Server error')
+// }
 
-})
+// })
 
 
 exports.signup = ( [

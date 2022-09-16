@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 const Auth = require("../src/middlewares/Auth");
+// const AuthValidator = require("../validators/AuthValidator");
 
 
 

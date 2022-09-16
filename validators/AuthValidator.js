@@ -21,7 +21,7 @@ module.exports = {
             errorMessage: 'A senha precisa ter pelo menos 6 caracteres'
         }
     }),
-    signin: checkSchema({
+    login: checkSchema({
         email: {
             isEmail: true,
             normalizeEmail: true,
