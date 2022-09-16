@@ -104,20 +104,20 @@ const User = require('../models/User');
 exports.signup = ( [
   check('name', 'Insira seu nome, por favor').not().isEmpty(),
   check('email', 'Esse e-mail não é válido').isEmail(),
-  check('password', 'A senha deve ter entre 6 e 8 caracteres').isLength({min:6}),
+  check('passwordHash', 'A senha deve ter entre 6 e 8 caracteres').isLength({min:6}),
   check('contato', 'Insira um contato válido, por favor').not().isEmpty(),
   ], async (req, res, next) => {
   
   try {
-      let { name, email, password, contato } = req.body
+      let { name, email, passwordHash, contato } = req.body
       const errors = validationResult(req)
       console.error(errors)
       if(!errors.isEmpty()){
           return res.status(400).json({errors: errors.array()})
       }else{
-          let user = new User( {name, email, password, contato })
+          let user = new User( {name, email, passwordHash, contato })
           const salt = await bcrypt.genSalt(10)
-          user.password = await bcrypt.hash(password, salt)
+          user.passwordHash = await bcrypt.hash(passwordHash, salt)
           await user.save()
           const payload = {
               user: {
@@ -128,8 +128,8 @@ exports.signup = ( [
               res.json(user)
           }
       }
-  } catch (err) {
-      console.error(err.message)
+  } catch (error) {
+      console.error(error.message)
       res.status(500).send({"error" : "Server Error"})
   }
 })

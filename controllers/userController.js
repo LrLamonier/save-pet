@@ -27,15 +27,6 @@ module.exports = {
         }
     })
     return res.render('user-perfil', { userPerfil })
-},
-  create: async (req, res,next) => {
-    try {
-        await User.create(req.body)
-    }catch(error){
-        console.log("ERRO: ", JSON.stringify(error?.parent?.sqlMessage));
-        next(new AppError('Erro na criação do usuário!', 400));
-    }
-    res.redirect("/")
 }
 }
 

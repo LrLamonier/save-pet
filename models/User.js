@@ -13,9 +13,13 @@ const User = db.sequelize.define('users', {
         type: db.Sequelize.STRING
     },
     contato: {
-        type: db.Sequelize.STRING
+        type: db.Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            notNull: {msg: "Inserir um contato é obrigatório"}
+        }
     },
-    password: {
+    passwordHash: {
         type: db.Sequelize.STRING
     },
     // token: {
