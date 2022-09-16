@@ -4,9 +4,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger/swagger_output.json");
-const hpp = require("hpp");
 const xss = require("xss-clean");
-const hpp = require("hpp");
+const hpp = require('hpp');
 
 const userRoute = require("./routes/userRoutes");
 const adoptRoute = require("./routes/adoptionRoutes");

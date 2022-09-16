@@ -1,8 +1,9 @@
 const express = require("express");
+const router = express.Router();
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
+const Auth = require("../src/middlewares/Auth");
 
-const router = express.Router();
 
 
 //route user
@@ -11,7 +12,6 @@ router.get("/", userController.allUsers);
 
 // criar conta
 router.post("/signup", authController.signup);
-router.post("/auth", authController.auth)
 
 // login
 // router.post("/login", authController.login);
@@ -33,7 +33,7 @@ router.post("/login", authController.login);
 // router.delete("/delete-account", authController.deleteAccount);
 
 // ver perfil
-router.get("/profile", authController.protect, userController.perfil);
+router.get("/profile", userController.perfil);
 
 // editar perfil
 // router.patch("/profile", authController.protect, userController.editProfile);
