@@ -15,7 +15,10 @@ const User = db.sequelize.define('users', {
     contato: {
         type: db.Sequelize.STRING
     },
-    password: {
+    passwordHash: {
+        type: db.Sequelize.STRING
+    },
+    token: {
         type: db.Sequelize.STRING
     }
 })
