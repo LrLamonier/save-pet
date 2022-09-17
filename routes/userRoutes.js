@@ -3,7 +3,7 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 const Auth = require("../src/middlewares/Auth");
-// const AuthValidator = require("../validators/AuthValidator");
+const AuthValidator = require("../validators/AuthValidator");
 
 
 
@@ -12,7 +12,7 @@ const Auth = require("../src/middlewares/Auth");
 router.get("/", userController.allUsers);
 
 // criar conta
-router.post("/signup", authController.signup);
+router.post("/signup", AuthValidator.signup, authController.signup);
 
 // login
 // router.post("/login", authController.login);

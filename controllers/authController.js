@@ -1,10 +1,10 @@
 const AppError = require("../utils/appError");
 // const { validationResult, matchedData } = require('express-validator')
 const catchAsync = require("../utils/catchAsync");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const {check, validationResult } = require('express-validator')
-const { promisify } = require("util");
+// const { promisify } = require("util");
 const User = require('../models/User');
 
 // // criar JWT
@@ -116,14 +116,14 @@ exports.signup = ( [
           return res.status(400).json({errors: errors.array()})
       }else{
           let user = new User( {name, email, passwordHash, contato })
-          const salt = await bcrypt.genSalt(10)
-          user.passwordHash = await bcrypt.hash(passwordHash, salt)
-          await user.save()
           const payload = {
               user: {
                   id: user.id
               }
           }
+          const token = await bcrypt.hash(payload, 10);
+          user.passwordHash = await bcrypt.hash(passwordHash, token)
+          await user.save()
           if(user.id){
               res.json(user)
           }
@@ -137,32 +137,39 @@ exports.signup = ( [
 //////////////////////////////////////////////////////////
 // login
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            res.json({error: errors.mapped()});
+            return;
+        }
+        const data = matchedData(req);
+        console.log(data)
+        // Validando o e-mail
+        const user = await User.findOne({email: data.email});
+        if(!user) {
+            res.json({error: 'E-mail e/ou senha errados!'});
+            return;
+        }
 
-  if (!email || !password) {
-    return next(new AppError("Usuário ou senha inválidos!", 401));
-  }
+        // Validando a senha
+        const match = await bcrypt.compare(data.password, user.passwordHash);
+        if(!match) {
+          console.log(match)
+            res.json({error: 'E-mail e/ou senha errados!'});
+            return;
+        }
 
-  // encontrar usuário no banco de dados
-  const user = await User.findOne({
-    where: {
-      email,
-    },
-  });
+        const payload = (Date.now() + Math.random()).toString();
+        const token = await bcrypt.hash(payload, 10);
 
-  if (!user) {
-    return next(new AppError("Email não cadastrado!", 404));
-  }
+        user.token = token;
+        await user.save();
 
-  // validar se a senha está correta
-  const passwordMatch = await bcrypt.compare(password, user.password);
-  if (!passwordMatch) {
-    return next(new AppError("Usuário ou senha inválidos!", 401));
-  }
+        res.json({token, email: data.email});
 
-  // enviar JWT
-  createSendToken(user, 200, req, res);
-});
+      })
+
+// );
 
 // logout
 exports.logout = (_, res) => {

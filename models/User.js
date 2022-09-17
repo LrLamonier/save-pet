@@ -14,17 +14,17 @@ const User = db.sequelize.define('users', {
     },
     contato: {
         type: db.Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            notNull: {msg: "Inserir um contato é obrigatório"}
-        }
+        // allowNull: false,
+        // validate: {
+        //     notNull: {msg: "Inserir um contato é obrigatório"}
+        // }
     },
     passwordHash: {
         type: db.Sequelize.STRING
     },
-    // token: {
-    //     type: db.Sequelize.STRING
-    // }
+    token: {
+        type: db.Sequelize.STRING
+    }
 })
 
 module.exports = User
