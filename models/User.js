@@ -1,33 +1,33 @@
-const db = require("../config/db")
+const db = require("../config/db");
 
-const User = db.sequelize.define('users', {
-    id: {
-        type: db.Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: {
-        type: db.Sequelize.STRING
-    },
-    email: {
-        type: db.Sequelize.STRING
-    },
-    contato: {
-        type: db.Sequelize.STRING,
-        // allowNull: false,
-        // validate: {
-        //     notNull: {msg: "Inserir um contato é obrigatório"}
-        // }
-    },
-    passwordHash: {
-        type: db.Sequelize.STRING
-    },
-    token: {
-        type: db.Sequelize.STRING
-    }
-})
+const User = db.sequelize.define("users", {
+  id: {
+    type: db.Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: db.Sequelize.STRING,
+  },
+  email: {
+    type: db.Sequelize.STRING,
+  },
+  contato: {
+    type: db.Sequelize.STRING,
+    // allowNull: false,
+    // validate: {
+    //     notNull: {msg: "Inserir um contato é obrigatório"}
+    // }
+  },
+  password: {
+    type: db.Sequelize.STRING,
+  },
+  token: {
+    type: db.Sequelize.STRING,
+  },
+});
 
-module.exports = User
+module.exports = User;
 
 // Teste de criação de usuário
 // User.create({
