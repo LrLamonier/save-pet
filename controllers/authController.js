@@ -34,16 +34,24 @@ exports.signup = (
         const newUser = new User({
             name: data.name,
             email: data.email,
-            passwordHash,
+            password: passwordHash,
             token,
         });
         await newUser.save();
 
         res.json({token});
-        // res.json({tudook: true, data})
+
     }
   )
 
+
+
+
+
+
+
+
+  
 //////////////////////////////////////////////////////////
 // login
 exports.login = catchAsync(async (req, res, next) => {

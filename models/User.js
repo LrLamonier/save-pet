@@ -19,7 +19,7 @@ const User = db.sequelize.define('users', {
         //     notNull: {msg: "Inserir um contato é obrigatório"}
         // }
     },
-    passwordHash: {
+    password: {
         type: db.Sequelize.STRING
     },
     token: {
