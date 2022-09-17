@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const { promisify } = require("util");
 
-const User = require("../models/usuarioPessoa");
+const User = require("../models/usuario");
 
 // criar JWT
 const signToken = (id) => {

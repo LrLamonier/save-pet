@@ -1,5 +1,3 @@
-const User = require("../models/usuarioPessoa");
-
 module.exports = {
   private: async (req, res, next) => {
     if (!req.query.token && !req.body.token) {

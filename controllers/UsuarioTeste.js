@@ -1,10 +1,10 @@
 // const AppError = require("../utils/appError");
-const { UsuarioPessoa } = require('../models');
+const { Usuario } = require('../models');
 
 module.exports = {
     create: async (req, res,next) => {
         try {
-            await UsuarioPessoa.create(req.body)
+            await Usuario.create(req.body)
         }catch(error){
             console.log("ERRO: ", JSON.stringify(error?.parent?.sqlMessage));
             next(new AppError('Erro na criação do usuário!', 400));
