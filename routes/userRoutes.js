@@ -15,7 +15,7 @@ router.post("/login", authController.login);
 router.post("/logout", authController.logout);
 
 // deletar conta
-router.delete("/delete-account", authController.deleteAccount);
+router.delete("/delete-account", authController.protect, authController.deleteAccount);
 
 // ver perfil
 router.get("/profile", authController.protect, userController.getMe);
