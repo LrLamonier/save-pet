@@ -1,6 +1,8 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const { UsuarioPessoa } = require("../models");
 const jwt = require("jsonwebtoken");
+const { cpf, cnpj } = require("cpf-cnpj-validator");
 const validator = require("validator");
 const { promisify } = require("util");
 
@@ -58,15 +60,39 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // validar campos input
   if (user) {
-    next(new AppError("Este e-mail já está cadastrado!", 400));
+    return next(new AppError("Este e-mail já está cadastrado!", 400));
   }
 
   if (!req.body.name) {
-    next(new AppError("Nome inválido!", 400));
+    return next(new AppError("Nome inválido!", 400));
   }
 
   if (!validator.isEmail(req.body.email)) {
-    next(new AppError("Email inválido!", 400));
+    return next(new AppError("Email inválido!", 400));
+  }
+
+  if (!req.body.contato) {
+    return next(new AppError("Telefone inválido!", 400));
+  }
+
+  if (!req.body.cpf && !req.body.cnpj) {
+    return next(new AppError("Insira uma identificação!", 400));
+  }
+
+  if (req.body.cpf && req.body.cnpj) {
+    return next(new AppError("Escolha um tipo de identificação!", 400));
+  }
+
+  if (req.body.cpf && !cpf.isValid(cpf * 1)) {
+    return next(new AppError("CPF inválido!", 400));
+  }
+
+  if (req.body.cnpj && !cnpj.isValid(cnpj * 1)) {
+    return next(new AppError("CNPJ inválido!", 400));
+  }
+
+  if (req.body.password !== req.body.passwordConfirm) {
+    return next(new AppError("As senhas não conferem!", 400));
   }
 
   const validatePassword = (password) => {
@@ -84,13 +110,27 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError("Senha inválida!", 400));
   }
 
-  if (req.body.password !== req.body.passwordConfirm) {
-    return next(new AppError("As senhas não conferem!", 400));
-  }
-
   // criar novo usuário
+  const newUser = {
+    nome: req.body.name,
+    email: req.body.email,
+    contato: req.body.contato,
+    cpf: req.body.cpf || undefined,
+    cnpj: req.body.cnpj || undefined,
+    password: req.body.password,
+  };
+
   //   const newUser = objeto do novo usuário
-  let newUser;
+  const createdUser = UsuarioPessoa.create(req.body);
+
+  if (!newUser) {
+    return next(
+      new AppError(
+        "Não foi possível criar a conta. Tente novamente mais tarde!",
+        500
+      )
+    );
+  }
 
   // envio de e-mail de confirmação de conta
 
