@@ -1,12 +1,9 @@
 // const AppError = require("../utils/appError");
+const express = require('express');
+const bcrypt = require('bcrypt')
 const catchAsync = require("../utils/catchAsync");
 const { UsuarioPessoa } = require("../models");
 
-// ver meu perfil
-exports.getMe = catchAsync(async (req, res, next) => {
-  // pegar dados do usuário baseado na ID do request
-  // const user = dados do usuário
-  let user;
 
   // retornar erro caso o usuário não seja encontrado
   if (!user) {
@@ -55,9 +52,3 @@ exports.editProfile = catchAsync(async (req, res, next) => {
 
   user.set(updatedUser);
   await user.save();
-
-  res.status(200).json({
-    status: "success",
-    user: updatedUser,
-  });
-});

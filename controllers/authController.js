@@ -173,6 +173,8 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
+// );
+
 // logout
 exports.logout = (_, res) => {
   res.cookie("jwt", "loggedout", {
