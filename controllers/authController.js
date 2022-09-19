@@ -1,13 +1,11 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const { UsuarioPessoa } = require("../models");
+const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const { cpf, cnpj } = require("cpf-cnpj-validator");
 const validator = require("validator");
 const { promisify } = require("util");
 const bcrypt = require("bcrypt");
-
-const User = require("../models/usuarioPessoa");
 
 // criar JWT
 const signToken = (id) => {
@@ -109,7 +107,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError(dataError.join(" "), 400));
   }
 
-  const user = await UsuarioPessoa.findOne({
+  const user = await User.findOne({
     where: { email: req.body.email },
   });
   if (user) {
@@ -127,7 +125,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     senha: senhaCriptografada,
   };
 
-  const createdUser = await UsuarioPessoa.create(newUser);
+  const createdUser = await User.create(newUser);
 
   if (!createdUser) {
     return next(
@@ -153,7 +151,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // encontrar usuário no banco de dados
-  const user = await UsuarioPessoa.findOne({
+  const user = await User.findOne({
     where: {
       email,
     },
@@ -224,7 +222,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  const currentUser = await UsuarioPessoa.findOne({
+  const currentUser = await User.findOne({
     where: {
       id: decoded.id,
     },

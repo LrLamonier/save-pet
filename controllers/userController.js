@@ -2,7 +2,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const catchAsync = require("../utils/catchAsync");
-const { UsuarioPessoa } = require("../models");
+const { User } = require("../models");
 
 //////////////////////////////////////////////////////////
 // editar perfil
@@ -21,7 +21,7 @@ exports.editProfile = catchAsync(async (req, res, next) => {
     updatedUser.contato = contato;
   }
 
-  const user = await UsuarioPessoa.findOne({
+  const user = await User.findOne({
     where: {
       id: req.user.dataValues.id,
     },
