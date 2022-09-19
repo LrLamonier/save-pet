@@ -5,7 +5,7 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 //buscar usuários
-router.get("/", userController.allUsers);
+// router.get("/", userController.allUsers);
 
 // criar conta
 router.post("/signup", authController.signup);
