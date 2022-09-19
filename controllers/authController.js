@@ -1,6 +1,6 @@
-const AppError = require("../utils/appError");
+// const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const { User } = require("../models");
+const { Usuario } = require("../models");
 const jwt = require("jsonwebtoken");
 const { cpf, cnpj } = require("cpf-cnpj-validator");
 const validator = require("validator");
@@ -107,7 +107,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError(dataError.join(" "), 400));
   }
 
-  const user = await User.findOne({
+  const user = await Usuario.findOne({
     where: { email: req.body.email },
   });
   if (user) {
@@ -125,7 +125,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     senha: senhaCriptografada,
   };
 
-  const createdUser = await User.create(newUser);
+  const createdUser = await Usuario.create(newUser);
 
   if (!createdUser) {
     return next(
@@ -151,7 +151,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // encontrar usuário no banco de dados
-  const user = await User.findOne({
+  const user = await Usuario.findOne({
     where: {
       email,
     },
@@ -186,7 +186,7 @@ exports.logout = (_, res) => {
 // deletar conta
 exports.deleteAccount = catchAsync(async (req, res, next) => {
   // encontrar o usuário no banco de dados e deletar
-  await User.destroy({
+  await Usuario.destroy({
     where: {
       id: req.user.id,
     },
@@ -222,7 +222,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  const currentUser = await User.findOne({
+  const currentUser = await Usuario.findOne({
     where: {
       id: decoded.id,
     },
