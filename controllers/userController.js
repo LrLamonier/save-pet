@@ -1,5 +1,6 @@
 // const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const { UsuarioPessoa } = require("../models");
 
 // ver meu perfil
 exports.getMe = catchAsync(async (req, res, next) => {
@@ -31,17 +32,32 @@ exports.getMe = catchAsync(async (req, res, next) => {
 //////////////////////////////////////////////////////////
 // editar perfil
 exports.editProfile = catchAsync(async (req, res, next) => {
-  const { name, email, telephone } = req.body;
+  // const { name, email, telephone } = req.body;
+  const { nome, email, contato } = req.body;
 
-  // fazer alterações no usuário no banco de dados
+  const updatedUser = {};
 
-  // se erro, responder com erro
+  if (nome) {
+    updatedUser.nome = nome;
+  }
+  if (email) {
+    updatedUser.email = email;
+  }
+  if (contato) {
+    updatedUser.contato = contato;
+  }
 
-  // se sucesso, responder com sucesso
-  let updatedUser;
+  const user = await UsuarioPessoa.findOne({
+    where: {
+      id: req.user.dataValues.id,
+    },
+  });
+
+  user.set(updatedUser);
+  await user.save();
 
   res.status(200).json({
     status: "success",
-    data: { user: updatedUser },
+    user: updatedUser,
   });
 });

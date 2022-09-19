@@ -5,26 +5,24 @@ const jwt = require("jsonwebtoken");
 const { cpf, cnpj } = require("cpf-cnpj-validator");
 const validator = require("validator");
 const { promisify } = require("util");
+const bcrypt = require("bcrypt");
 
 const User = require("../models/usuarioPessoa");
 
 // criar JWT
 const signToken = (id) => {
-  return (
-    jwt.sign({ id }, process.env.JWT_SECRET),
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    }
-  );
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 };
 
 // enviar JWT
 const createSendToken = (user, statusCode, req, res) => {
-  const token = signToken(user.id); // colocar a id que identifica o usuário no banco de dados
+  const token = signToken(user.dataValues.id); // colocar a id que identifica o usuário no banco de dados
 
   // configurar cookie
   const cookieOptions = {
-    expires: new Date(
+    expiresIn: new Date(
       Date.now() + process.env.JWT_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
@@ -38,8 +36,8 @@ const createSendToken = (user, statusCode, req, res) => {
 
   // preparar resposta, extrair dados do objeto user
   const resUser = {
-    name: user.name,
-    email: user.email,
+    name: user.dataValues.nome,
+    email: user.dataValues.email,
   };
 
   // enviar resposta
@@ -53,77 +51,85 @@ const createSendToken = (user, statusCode, req, res) => {
 //////////////////////////////////////////////////////////
 // criação de conta
 exports.signup = catchAsync(async (req, res, next) => {
-  // procurar usuário no banco de dados
+  const dataError = [];
 
-  // const user = await procurarUsuárioNoBancoDeDados
-  let user;
-
-  // validar campos input
-  if (user) {
-    return next(new AppError("Este e-mail já está cadastrado!", 400));
+  if (!req.body.nome) {
+    dataError.push("Nome inválido.");
   }
 
-  if (!req.body.name) {
-    return next(new AppError("Nome inválido!", 400));
+  if (!req.body.email || !validator.isEmail(req.body.email)) {
+    dataError.push("Email inválido.");
   }
 
-  if (!validator.isEmail(req.body.email)) {
-    return next(new AppError("Email inválido!", 400));
-  }
-
-  if (!req.body.contato) {
-    return next(new AppError("Telefone inválido!", 400));
+  if (!req.body.tel_contato) {
+    dataError.push("Telefone inválido.");
   }
 
   if (!req.body.cpf && !req.body.cnpj) {
-    return next(new AppError("Insira uma identificação!", 400));
+    dataError.push("Insira uma identificação.");
   }
 
   if (req.body.cpf && req.body.cnpj) {
-    return next(new AppError("Escolha um tipo de identificação!", 400));
+    dataError.push("Escolha apenas um tipo de identificação.");
   }
 
-  if (req.body.cpf && !cpf.isValid(cpf * 1)) {
-    return next(new AppError("CPF inválido!", 400));
+  if (req.body.cpf) {
+    req.body.cpf = req.body.cpf.replace(/./g, "").replace(/-/g, "");
+  }
+  if (req.body.cpf && !cpf.isValid(newCPF)) {
+    dataError.push("CPF inválido.");
   }
 
-  if (req.body.cnpj && !cnpj.isValid(cnpj * 1)) {
-    return next(new AppError("CNPJ inválido!", 400));
+  if (req.body.cnpj) {
+    req.body.cnpj = req.body.cnpj.replace(/./g, "").replace(/-/g, "");
+  }
+  if (req.body.cnpj && !cnpj.isValid(req.body.cnpj * 1)) {
+    dataError.push("CNPJ inválido.");
   }
 
-  if (req.body.password !== req.body.passwordConfirm) {
-    return next(new AppError("As senhas não conferem!", 400));
+  if (req.body.senha !== req.body.confirmSenha) {
+    dataError.push("As senhas não são iguais.");
   }
 
   const validatePassword = (password) => {
-    // regras para a senha
     return (
       password.length >= 8 &&
-      validator.isWhiteListed(
+      validator.isWhitelisted(
         password,
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXWYZ!@#$%&*()_-+=0123456789"
       )
     );
   };
 
-  if (!validatePassword(req.body.password)) {
-    return next(new AppError("Senha inválida!", 400));
+  if (!req.body.senha || !validatePassword(req.body.senha)) {
+    dataError.push("Senha inválida.");
   }
 
-  // criar novo usuário
+  if (dataError.length > 0) {
+    return next(new AppError(dataError.join(" "), 400));
+  }
+
+  const user = await UsuarioPessoa.findOne({
+    where: { email: req.body.email },
+  });
+  if (user) {
+    return next(new AppError("Este e-mail já está cadastrado!", 400));
+  }
+
+  const senhaCriptografada = await bcrypt.hash(req.body.senha, 10);
+
   const newUser = {
-    nome: req.body.name,
+    nome: req.body.nome,
     email: req.body.email,
-    contato: req.body.contato,
+    contato: req.body.tel_contato,
     cpf: req.body.cpf || undefined,
     cnpj: req.body.cnpj || undefined,
-    password: req.body.password,
+    senha: senhaCriptografada,
   };
 
-  //   const newUser = objeto do novo usuário
-  const createdUser = UsuarioPessoa.create(req.body);
+  const createdUser = await UsuarioPessoa.create(newUser);
 
-  if (!newUser) {
+  if (!createdUser) {
     return next(
       new AppError(
         "Não foi possível criar a conta. Tente novamente mais tarde!",
@@ -134,21 +140,20 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // envio de e-mail de confirmação de conta
 
-  // envio do token JWT
-  createSendToken(newUser, 201, req, res);
+  createSendToken(createdUser, 201, req, res);
 });
 
 //////////////////////////////////////////////////////////
 // login
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, senha } = req.body;
 
-  if (!email || !password) {
+  if (!email || !senha) {
     return next(new AppError("Usuário ou senha inválidos!", 401));
   }
 
   // encontrar usuário no banco de dados
-  const user = await User.findOne({
+  const user = await UsuarioPessoa.findOne({
     where: {
       email,
     },
@@ -159,7 +164,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // validar se a senha está correta
-  const passwordMatch = await bcrypt.compare(password, user.password);
+  const passwordMatch = await bcrypt.compare(senha, user.senha);
   if (!passwordMatch) {
     return next(new AppError("Usuário ou senha inválidos!", 401));
   }
@@ -202,7 +207,6 @@ exports.deleteAccount = catchAsync(async (req, res, next) => {
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
 
-  // identificar o token no cookie do request
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -212,28 +216,29 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.cookies.jwt;
   }
 
-  // retornar um erro se não houver token
   if (!token) {
     return next(new AppError("Você não está conectado!", 401));
   }
 
-  // decodificar o token para extrair a ID do usuário
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  // buscar no banco de dados a ID do usuário
-  const currentUser = await User.findOne({ id: decoded });
+  const currentUser = await UsuarioPessoa.findOne({
+    where: {
+      id: decoded.id,
+    },
+  });
 
-  // retornar erro de acesso negado caso o usuário não exista
   if (!currentUser) {
     return next(new AppError("Você não está conectado!", 401));
   }
 
   // verificar se a senha foi alterada e, caso tenha sido, comparar a timestamp iat do JWT com Date.now()
-  if (currentUser.passwordChange && currentUser.passwordChange < Date.now()) {
-    return next(new AppError("Você não está conectado!", 401));
-  }
+  // if (currentUser.passwordChange && currentUser.passwordChange < Date.now()) {
+  //   return next(new AppError("Você não está conectado!", 401));
+  // }
 
-  // permitir acesso
+  // // permitir acesso
   req.user = currentUser;
+  console.log(req.user);
   next();
 });
