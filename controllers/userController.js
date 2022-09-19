@@ -2,51 +2,53 @@
 const express = require('express');
 const bcrypt = require('bcrypt')
 const catchAsync = require("../utils/catchAsync");
-//Apontamento antigo de conexão ao banco
-// const db = require('../models/index');
-const User = require("../models/User")
-// const req = require('express/lib/request');
+const { UsuarioPessoa } = require("../models");
 
 
-module.exports = {
-  allUsers: async (req,res,next) => {
-    try {
-      const users = await User.findAll()
-      console.log(users)
-      res.json(users)
-    } catch (error) {
-      console.error(error.message)
-      res.status(500).send({ "error": 'Erro!' })
-    }
-  },
-  perfil: async (req, res, next) =>{
-    let { id_user } = req.params;
-    let userPerfil = await Usuario.findOne({
-        where: {
-            id: id_user
-        }
-    })
-    return res.render('user-perfil', { userPerfil })
-}
-}
+  // retornar erro caso o usuário não seja encontrado
+  if (!user) {
+    return next(new AppError("Usuário não encontrado!", 404));
+  }
+
+  // criar objeto usuário para resposta
+  const userRes = {
+    name: user.name,
+    email: user.email,
+    telephone: user.telephone,
+  };
+
+  // resposta
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: userRes,
+    },
+  });
+});
 
 //////////////////////////////////////////////////////////
-// deletar conta
-exports.deleteAccount = catchAsync(async (req, res, next) => {
-  // encontrar o usuário no banco de dados e deletar
-  await User.destroy({
+// editar perfil
+exports.editProfile = catchAsync(async (req, res, next) => {
+  // const { name, email, telephone } = req.body;
+  const { nome, email, contato } = req.body;
+
+  const updatedUser = {};
+
+  if (nome) {
+    updatedUser.nome = nome;
+  }
+  if (email) {
+    updatedUser.email = email;
+  }
+  if (contato) {
+    updatedUser.contato = contato;
+  }
+
+  const user = await UsuarioPessoa.findOne({
     where: {
-      id: req.user.id,
+      id: req.user.dataValues.id,
     },
   });
 
-  // fazer logout
-  res.cookie("jwt", "loggedout", {
-    expires: new Date(Date.now() + 1),
-    httpOnly: true,
-  });
-
-  // resposta
-  res.status(200).json({ status: "success" });
-});
-
+  user.set(updatedUser);
+  await user.save();

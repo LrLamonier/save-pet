@@ -1,6 +1,18 @@
 // const AppError = require("../utils/appError");
 
 // manipuladores de erros em produção
+const sendErrorProd = (err, res) => {
+  if (err.isOperational) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+    });
+  }
+  return res.status(500).json({
+    status: "error",
+    message: "Algo deu errado. Tente novamente.",
+  });
+};
 
 // manipulador de erros em desenvolvimento
 const sendErrorDev = (err, res) => {
@@ -32,8 +44,8 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || "erro";
 
   // envio de erro em desenvolvimento
-  // sendErrorDev(err, res);
+  sendErrorDev(err, res);
 
-  // envio de erro em produção
-  sendErrorProd(err, req, res);
+  // envio de erros em produção
+  // sendErrorProd(err, res);
 };
