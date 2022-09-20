@@ -1,3 +1,5 @@
+const { DataTypes } = require("sequelize");
+
 module.exports = (connection, DataTypes) => {   
     const model = connection.define('Usuario', {
         id_usuario: {

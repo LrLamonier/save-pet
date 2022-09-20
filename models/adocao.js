@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (connection, DataTypes) => {   
-    const model = connection.define('Chamados', {
-        id_chamado: {
+    const model = connection.define('Adocao', {
+        id_adocao: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -20,28 +20,16 @@ module.exports = (connection, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        local:{
+        contato: {
             type: DataTypes.STRING,
             allowNull: false
-        }//,
-        // id_usuario_adocao: {
-        //     type: DataTypes.INTEGER, 
-        //     allowNull: false,
-        //     references: {
-        //         model: "usuario",
-        //         key: "id_usuario"
-        //     }
-        // }
+        },
     },
     {
         timestamps: false,
-        tableName: 'chamados'
+        tableName: 'adocao'
     })
-
     model.sync({ alter: true })
     return model
-
 }
-console.log("Tabela de chamados criada")
-
-
+console.log("Tabela de adocao criada")
