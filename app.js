@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger/swagger_output.json");
 const xss = require("xss-clean");
-const hpp = require('hpp');
+const hpp = require("hpp");
 
 const userRoute = require("./routes/userRoutes");
 const adoptRoute = require("./routes/adoptionRoutes");
@@ -21,7 +21,7 @@ app.use(cors());
 app.options("*", cors());
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // limitar tamanho dos requests
 app.use(
@@ -42,12 +42,13 @@ app.use(xss());
 
 // adicionar timestamp do request ao corpo
 app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
+  req.requestTime = new Date();
   next();
 });
 
 // whitelist
-app.use(hpp({
+app.use(
+  hpp({
     whitelist: [
       "titulo",
       "tipo_pet",

@@ -1,7 +1,3 @@
-// const AppError = require("../utils/appError");
-
-// manipuladores de erros em produção
-
 // manipulador de erros em desenvolvimento
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -28,12 +24,21 @@ const sendErrorProd = (err, req, res) => {
 
 // manipulador global de erros
 module.exports = (err, req, res, next) => {
+  console.log(err);
+
+  if (err.name === "SequelizeValidationError") {
+    return res.status(500).json({
+      status: "error",
+      message: "Dados inválidos!",
+    });
+  }
+
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "erro";
 
   // envio de erro em desenvolvimento
   // sendErrorDev(err, res);
 
-  // envio de erro em produção
-  sendErrorProd(err, req, res);
+  // envio de erros em produção
+  sendErrorProd(err, res);
 };
