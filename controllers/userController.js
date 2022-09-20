@@ -3,6 +3,16 @@ const catchAsync = require("../utils/catchAsync");
 const { Usuario } = require("../models");
 
 //////////////////////////////////////////////////////////
+// buscar todos os usuários
+exports.allUsers = catchAsync(async (req, res, next) => {
+  const allUsers = await Usuario.findAll();
+  console.log(allUsers);
+  res.status(200).json({
+    status: "success",
+  });
+});
+
+//////////////////////////////////////////////////////////
 // editar perfil
 exports.editProfile = catchAsync(async (req, res, next) => {
   const { nome, email, contato } = req.body;

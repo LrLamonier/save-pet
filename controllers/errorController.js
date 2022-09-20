@@ -24,12 +24,21 @@ const sendErrorProd = (err, req, res) => {
 
 // manipulador global de erros
 module.exports = (err, req, res, next) => {
+  console.log(err);
+
+  if (err.name === "SequelizeValidationError") {
+    return res.status(500).json({
+      status: "error",
+      message: "Dados inválidos!",
+    });
+  }
+
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "erro";
 
   // envio de erro em desenvolvimento
-  sendErrorDev(err, res);
+  // sendErrorDev(err, res);
 
   // envio de erros em produção
-  // sendErrorProd(err, res);
+  sendErrorProd(err, res);
 };
