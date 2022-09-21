@@ -29,15 +29,9 @@ exports.editProfile = catchAsync(async (req, res, next) => {
     updatedUser.contato = contato;
   }
 
-  const user = await Usuario.findOne({
-    where: {
-      id: req.user.dataValues.id,
-    },
-  });
+  req.user.set(updatedUser);
 
-  user.set(updatedUser);
-
-  await user.save();
+  await req.user.save();
 
   res.status(200).json({
     status: "success",

@@ -14,15 +14,24 @@ router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
 // logout
-router.post("/logout", authController.logout);
-
-// deletar conta
-// router.get("/", userController.allUsers);
+router.get("/logout", authController.logout);
 
 // ver perfil
 // router.get("/profile", userController.perfil);
 
 // editar perfil
 router.patch("/profile", authController.protect, userController.editProfile);
+
+// trocar senha
+router.post("/esqueci-senha", authController.resetPasswordRequest);
+router.patch("/esqueci-senha", authController.resetPassword);
+
+// deletar conta
+router.post(
+  "/deletar-conta",
+  authController.protect,
+  authController.deleteAccountRequest
+);
+router.delete("/deletar-conta", authController.deleteAccount);
 
 module.exports = router;
