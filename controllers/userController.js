@@ -1,13 +1,11 @@
-// const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const { Usuario } = require("../models");
+const AppError = require("../utils/appError");
 
-//////////////////////////////////////////////////////////
-// buscar todos os usuários
 exports.allUsers = catchAsync(async (req, res, next) => {
-  const allUsers = await Usuario.findAll();
+  const users = await Usuario.findAll();
 
-  const usersRes = allUsers.map((u) => {
+  const usersRes = users.map((u) => {
     return {
       id_usuario: u.id_usuario,
       nome: u.nome,
@@ -25,8 +23,6 @@ exports.allUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-//////////////////////////////////////////////////////////
-// ver meu perfil
 exports.myProfile = (req, res, next) => {
   const { nome, email, contato, cpf, cnpj } = req.user.dataValues;
 
@@ -40,8 +36,6 @@ exports.myProfile = (req, res, next) => {
   });
 };
 
-//////////////////////////////////////////////////////////
-// editar perfil
 exports.editProfile = catchAsync(async (req, res, next) => {
   const { nome, email, contato } = req.body;
 
@@ -67,6 +61,20 @@ exports.editProfile = catchAsync(async (req, res, next) => {
   });
 });
 
-//////////////////////////////////////////////////////////
-// buscar perfil
-exports.getUser = catchAsync(async (req, res, next) => {});
+exports.getUserByID = catchAsync(async (req, res, next) => {
+  const user = await Usuario.findOne({
+    where: {
+      id_usuario: req.body.id_usuario,
+    },
+  });
+
+  if (!user) {
+    return next(new AppError("Usuário não encontrado!", 404));
+  }
+
+  res.status(200).json({
+    nome: user.nome,
+    email: user.email,
+    contato: user.contato,
+  });
+});

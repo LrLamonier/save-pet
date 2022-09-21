@@ -8,6 +8,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 const userRoute = require("./routes/userRoutes");
+const eventRoute = require("./routes/eventRoutes");
 const adoptRoute = require("./routes/adoptionRoutes");
 
 const globalErrorHandler = require("./controllers/errorController");
@@ -72,6 +73,7 @@ app.get("/", (req, res) => {
   res.send(`Save Pet`);
 });
 app.use("/user", userRoute);
+app.use("/event", eventRoute);
 app.use("/adopt", adoptRoute);
 
 // manipulação de erros
