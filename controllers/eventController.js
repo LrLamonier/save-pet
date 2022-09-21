@@ -12,14 +12,11 @@ exports.allEvents = catchAsync(async (req, res, next) => {
   }
 
   if (!req.body.location) {
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       chamados,
     });
   }
-
-  const distance = calcDistance(req.body.location, chamados[0].local);
-  console.log(distance);
 
   const chamadosDistancia = chamados.map((c) => {
     return {

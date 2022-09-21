@@ -7,8 +7,6 @@ module.exports = (coordUser, coordEntry) => {
     lat: coordUser.split(",")[0] * 1,
     lon: coordUser.split(",")[1] * 1,
   };
-  console.log(coordUser);
-  console.log(coordEntry);
 
   const event = {
     lat: coordEntry.split(",")[0] * 1,
