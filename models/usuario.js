@@ -31,6 +31,9 @@ module.exports = (connection, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+      },
       dtSenhaAlter: {
         type: DataTypes.STRING,
       },

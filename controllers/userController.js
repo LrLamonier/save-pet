@@ -6,11 +6,39 @@ const { Usuario } = require("../models");
 // buscar todos os usuários
 exports.allUsers = catchAsync(async (req, res, next) => {
   const allUsers = await Usuario.findAll();
-  console.log(allUsers);
+
+  const usersRes = allUsers.map((u) => {
+    return {
+      id_usuario: u.id_usuario,
+      nome: u.nome,
+      email: u.email,
+      contato: u.contato,
+      cpf: u.cpf,
+      cnpj: u.cnpj,
+      isAdmin: u.isAdmin,
+    };
+  });
+
   res.status(200).json({
     status: "success",
+    data: usersRes,
   });
 });
+
+//////////////////////////////////////////////////////////
+// ver meu perfil
+exports.myProfile = (req, res, next) => {
+  const { nome, email, contato, cpf, cnpj } = req.user.dataValues;
+
+  const id = cpf ? { cpf } : { cnpj };
+
+  res.status(200).json({
+    nome,
+    email,
+    contato,
+    id,
+  });
+};
 
 //////////////////////////////////////////////////////////
 // editar perfil
@@ -38,3 +66,7 @@ exports.editProfile = catchAsync(async (req, res, next) => {
     usuario: updatedUser,
   });
 });
+
+//////////////////////////////////////////////////////////
+// buscar perfil
+exports.getUser = catchAsync(async (req, res, next) => {});

@@ -37,8 +37,8 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || "erro";
 
   // envio de erro em desenvolvimento
-  sendErrorDev(err, res);
+  // sendErrorDev(err, res);
 
   // envio de erros em produção
-  // sendErrorProd(err, res);
+  sendErrorProd(err, res);
 };

@@ -4,8 +4,8 @@ const userController = require("../controllers/userController");
 
 const router = express.Router();
 
-//buscar usuários
-router.get("/", userController.allUsers);
+// buscar um usuário específico
+router.get("/", userController.getUser);
 
 // criar conta
 router.post("/signup", authController.signup);
@@ -14,24 +14,33 @@ router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
 // logout
-router.get("/logout", authController.logout);
+router.post("/logout", authController.logout);
 
-// ver perfil
-// router.get("/profile", userController.perfil);
-
-// editar perfil
-router.patch("/profile", authController.protect, userController.editProfile);
-
-// trocar senha
+// recuperar senha
 router.post("/esqueci-senha", authController.resetPasswordRequest);
 router.patch("/esqueci-senha", authController.resetPassword);
 
 // deletar conta
-router.post(
-  "/deletar-conta",
-  authController.protect,
-  authController.deleteAccountRequest
-);
 router.delete("/deletar-conta", authController.deleteAccount);
+
+////////////////////
+// zona restrita
+router.use(authController.protect);
+
+// ver perfil
+router.get("/profile", userController.myProfile);
+
+// editar perfil
+router.patch("/profile", userController.editProfile);
+
+// solicitar token para deletar conta
+router.post("/deletar-conta", authController.deleteAccountRequest);
+
+// SOMENTE ADMINS: ver todos os usuários
+router.get(
+  "/lista-contas",
+  authController.restrictAdmin,
+  userController.allUsers
+);
 
 module.exports = router;

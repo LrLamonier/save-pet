@@ -62,16 +62,19 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 
   if (req.body.cpf) {
-    req.body.cpf = req.body.cpf.replace(/./g, "").replace(/-/g, "");
+    req.body.cpf = req.body.cpf.replace(/[.]/g, "").replace(/[-]/g, "");
   }
-  if (req.body.cpf && !cpf.isValid(newCPF)) {
+  if (req.body.cpf && !cpf.isValid(req.body.cpf)) {
     dataError.push("CPF inválido.");
   }
 
   if (req.body.cnpj) {
-    req.body.cnpj = req.body.cnpj.replace(/./g, "").replace(/-/g, "");
+    req.body.cnpj = req.body.cnpj
+      .replace(/[.]/g, "")
+      .replace(/[-]/g, "")
+      .replace(/[/]/g, "");
   }
-  if (req.body.cnpj && !cnpj.isValid(req.body.cnpj * 1)) {
+  if (req.body.cnpj && !cnpj.isValid(req.body.cnpj)) {
     dataError.push("CNPJ inválido.");
   }
 
@@ -353,3 +356,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictAdmin = (req, res, next) => {
+  if (!req.user.dataValues.isAdmin) {
+    return next(new AppError("Acesso não autorizado!", 403));
+  }
+  next();
+};
