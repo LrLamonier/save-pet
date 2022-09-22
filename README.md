@@ -6,7 +6,7 @@
 - [Funcionalidades](##-Funcionalidades)
 - [Integração com outros serviços](##-Integração-com-outros-serviços)
 - [Quickstart](##-Quickstart)
-- [Endpoints](##-Endpoints)
+- [Endpoints](#endpoints)
 - [A equipe](##-A-equipe)
 
 ## A ideia
