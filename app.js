@@ -68,8 +68,8 @@ app.use(
 app.get("/", (req, res) => {
   res.send(`Save Pet`);
 });
-app.use("/user", userRoute);
-app.use("/event", eventRoute);
+app.use("/usuario", userRoute);
+app.use("/chamados", eventRoute);
 app.use("/adopt", adoptRoute);
 
 // manipulação de erros

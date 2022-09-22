@@ -31,6 +31,7 @@ exports.allEvents = catchAsync(async (req, res, next) => {
   if (!loc) {
     return res.status(200).json({
       status: "success",
+      results: chamados.length,
       chamados,
     });
   }
@@ -39,6 +40,7 @@ exports.allEvents = catchAsync(async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       message: "Localização inválida, exibindo chamados na ordem padrão.",
+      results: chamados.length,
       chamados,
     });
   }
@@ -61,6 +63,7 @@ exports.allEvents = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
+    results: chamadosOrdenados.length,
     chamados: chamadosOrdenados,
   });
 });
@@ -85,11 +88,15 @@ exports.allEventsByUser = catchAsync(async (req, res, next) => {
       descricao: dataValues.descricao,
       local: dataValues.local,
       dtAbertura: dataValues.dtAbertura,
+      concluido: dataValues.concluido,
+      dtConclusao: dataValues.dtConclusao,
       id_usuario_chamado: dataValues.id_usuario_chamado,
     };
   });
 
   res.status(200).json({
+    status: "success",
+    results: chamadosRes.length,
     chamados: chamadosRes,
   });
 });
@@ -159,6 +166,7 @@ exports.createEvent = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     data: {
+      id_chamado: novoChamado.dataValues.id_chamado,
       titulo,
       tipoPet,
       descricao,
@@ -166,6 +174,26 @@ exports.createEvent = catchAsync(async (req, res, next) => {
       dtAbertura: req.requestTime,
       id_usuario_chamado,
     },
+  });
+});
+
+exports.myEvents = catchAsync(async (req, res, next) => {
+  const myEvents = await Chamados.findAll({
+    where: {
+      id_usuario_chamado: req.user.dataValues.id_usuario,
+    },
+  });
+
+  if (!myEvents) {
+    return next(
+      new AppError("Nenhum chamado encontrado para este usuário.", 404)
+    );
+  }
+
+  res.status(200).json({
+    status: "success",
+    results: myEvents.length,
+    myEvents,
   });
 });
 

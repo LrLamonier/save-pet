@@ -64,7 +64,7 @@ exports.editProfile = catchAsync(async (req, res, next) => {
 exports.getUserByID = catchAsync(async (req, res, next) => {
   const user = await Usuario.findOne({
     where: {
-      id_usuario: req.body.id_usuario,
+      id_usuario: req.params.id,
     },
   });
 
