@@ -31,10 +31,6 @@ app.use(
   })
 );
 
-// habilitar Body Parser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 // leitura de cookies para autenticação
 app.use(cookieParser());
 
@@ -43,7 +39,7 @@ app.use(xss());
 
 // adicionar timestamp do request ao corpo
 app.use((req, res, next) => {
-  req.requestTime = new Date();
+  req.requestTime = Date.now();
   next();
 });
 

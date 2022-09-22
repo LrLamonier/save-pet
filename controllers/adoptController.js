@@ -4,16 +4,17 @@ const { Adocao } = require("../models");
 
 // cadastrar adoção
 exports.newAdopt = catchAsync(async (req, res, next) => {
-  const newAdoption = await Adocao.create(req.body);
+  const { titulo, tipoPet, descricao, local } = req.body;
+  // const newAdoption = await Adocao.create(req.body);
 
-  if (!newAdoption) {
-    return next(new AppError("Não foi possível cadastrar essa adoção!", 500));
-  }
+  // if (!newAdoption) {
+  //   return next(new AppError("Não foi possível cadastrar essa adoção!", 500));
+  // }
 
   res.status(201).json({
     status: "success",
     data: {
-      newAdoption,
+      // newAdoption,
     },
   });
 });

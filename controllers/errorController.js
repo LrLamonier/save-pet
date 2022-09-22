@@ -19,6 +19,7 @@ const sendErrorProd = (err, res) => {
   }
 
   if (err.name === "SequelizeValidationError") {
+    console.log(err);
     return res.status(400).json({
       status: "fail",
       message: "Dados inválidos.",
