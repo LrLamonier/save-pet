@@ -1,24 +1,22 @@
 # SavePet
-Projeto que visa criar e manter uma rede colaborativa para resgatar, cuidar, e achar um novo lar para os amigos peludos, penudos e etc.
 
-### Pré-requisitos globais:
+## Conteúdo
 
-### Instalação:
-<!-- `npm i axios bcrypt body-parser code config cors express mongoose mustache-express router` -->
-`npm i body-parser cookie-parser cors dotenv express express-validator jsonwebtoken mysql2 sequelize sequelize-cli swagger-autogen swagger-ui-express validator xss-clean`
+- A ideia
+- Funcionalidades
+- Integração com outros serviços
+- Quickstart
+- Endpoints
+- [A equipe](##-Conteúdo)
 
-### Dependẽncias de desenvolvimento
-`npm i jest nodemon supertest --save-dev`
+## A ideia
 
-### Para rodar o projeto:
-`npm run start`
+## Funcionalidades
 
-### Para documentação:
-http://localhost:8000/doc/
+## Integração com outros serviços
 
-## Postman
-# Rota de get de todos os usuários
+## Quickstart
 
+## Endpoints
 
-# Rota de signup
-https://www.getpostman.com/collections/fe3f2eb13cb9af3ec281
+## A equipe
