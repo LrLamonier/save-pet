@@ -13,10 +13,8 @@ const adoptRoute = require("./routes/adoptionRoutes");
 
 const globalErrorHandler = require("./controllers/errorController");
 
-// app Express
 const app = express();
 
-// habilitar cors
 app.enable("trust proxy");
 app.use(cors());
 app.options("*", cors());
@@ -24,26 +22,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// limitar tamanho dos requests
 app.use(
   express.json({
     limit: "10kb",
   })
 );
 
-// leitura de cookies para autenticação
 app.use(cookieParser());
 
-// proteção contra cross-site scripting
 app.use(xss());
 
-// adicionar timestamp do request ao corpo
 app.use((req, res, next) => {
   req.requestTime = Date.now();
   next();
 });
 
-// whitelist
 app.use(
   hpp({
     whitelist: [
@@ -64,7 +57,6 @@ app.use(
   })
 );
 
-// rotas
 app.get("/", (req, res) => {
   res.send(`Save Pet`);
 });
@@ -72,10 +64,8 @@ app.use("/usuario", userRoute);
 app.use("/chamados", eventRoute);
 app.use("/adopt", adoptRoute);
 
-// manipulação de erros
 app.use(globalErrorHandler);
 
-//documentação
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 module.exports = app;

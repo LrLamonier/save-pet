@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "startdev": "nodemon server --ignore client",
-    "swagger": "node swagger",
-    "test": "NODE_ENV=test& jest --runInBand"
+    "start:prod": "set NODE_ENV=production & nodemon server.js",
+    "start:dev": "set NODE_ENV=development & nodemon server.js",
+    "swagger": "node swagger"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

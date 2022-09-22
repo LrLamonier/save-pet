@@ -1,5 +1,0 @@
-não colocar a validação em duas etapas
-	ao invés disso mostrar somente como a API se conectaria com esse serviço
-
-testar token iat
-atualizar data de alteração da senha no controlador de alteração de senha

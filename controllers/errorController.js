@@ -1,4 +1,3 @@
-// manipulador de erros em desenvolvimento
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -8,9 +7,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-// manipulador de erros em produção
 const sendErrorProd = (err, res) => {
-  console.log(err);
   if (err.isOperational) {
     return res.status(err.statusCode).json({
       status: err.status,
@@ -19,7 +16,6 @@ const sendErrorProd = (err, res) => {
   }
 
   if (err.name === "SequelizeValidationError") {
-    console.log(err);
     return res.status(400).json({
       status: "fail",
       message: "Dados inválidos.",
@@ -32,14 +28,22 @@ const sendErrorProd = (err, res) => {
   });
 };
 
-// manipulador global de erros
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "erro";
 
-  // envio de erro em desenvolvimento
-  sendErrorDev(err, res);
+  env = JSON.stringify(process.env.NODE_ENV)
+    .replace(/["]/g, "")
+    .replace(" ", "");
 
-  // envio de erros em produção
-  // sendErrorProd(err, res);
+  if (env === "development") {
+    sendErrorDev(err, res);
+  } else if (env === "production") {
+    sendErrorProd(err, res);
+  } else {
+    return res.status(500).json({
+      status: "fail",
+      message: "Algo deu errado. Tente novamente em alguns minutos.",
+    });
+  }
 };

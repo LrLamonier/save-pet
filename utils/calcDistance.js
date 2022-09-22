@@ -17,5 +17,3 @@ module.exports = (coordUser, coordEntry) => {
 
   return distance < 1 ? 1 : distance;
 };
-
-// 40.747129721258524,-73.98724806347656
