@@ -348,7 +348,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (
     currentUser.dataValues.dtSenhaAlter &&
-    Date.now() < currentUser.dataValues.dtSenhaAlter
+    // Date.now() < currentUser.dataValues.dtSenhaAlter
+    decoded.iat < currentUser.dataValues.dtSenhaAlter
   ) {
     return next(new AppError("Você não está conectado!", 401));
   }
