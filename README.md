@@ -1,4 +1,33 @@
-# SavePet
+<div align="center" style="margin: 20px; text-align: center">
+
+![README](https://img1.wsimg.com/isteam/stock/42906/:/cr=t:0%25,l:0%25,w:100%25,h:100%25)
+
+<h1> SavePet </h1>
+  Um projeto desenvolvido durante o Dev For Tech I Back End - NodeJS. Um projeto de atração,  treinamento e recrutamento de Tech talents  mantido pela 
+  
+  [Gama Academy](https://www.gama.academy) em parceria com a [ACATE](https://www.acate.com.br) 
+
+  [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/LrLamonier/save-pet/blob/main/LICENSE)
+  ![GitHub last commit](https://img.shields.io/github/last-commit/LrLamonier/save-pet?style=flat-square)
+  ![GitHub top language](https://img.shields.io/github/languages/top/LrLamonier/save-pet?style=flat-square)
+ 
+</div>
+
+<p align="center">
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-proposta">Proposta</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-requisitos">Requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-equipe">Equipe</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-endpoints">API</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-licença">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+</p>
+
+<div align="center">  
+
+[![Skills](https://skillicons.dev/icons?i=node,js,webpack,vscode,aws,styledcomponents,MySql,express,&perline=8)](/LrLamonier/save-pet)
+ 
+</div>
 
 ## Conteúdo
 
@@ -19,6 +48,8 @@
 - [A equipe](#a-equipe)
 
 ## A ideia
+
+Olá! Somos a SavePet. Nosso objetivo é auxiliar animais em vulnerabilidade (ex. abandonados, machucados, doentes, maus tratos) por resgatar esses animais aonde estiverem, por acionar a instituição/ongs/pessoas para que essa possa fazer o resgate do animal e registre o status da ocorrencia. Se o animal estiver ferido/precisando de ajuda medica passará primeiro por cuidados antes de ser liberado para adoção, senão será encaminhado para a lista de adoção. Também contamos com a opção de cadastrar animais pra adoção ou se voluntariar pra adotar algum deles (da instituição ou cadastrado por outros).
 
 ## Funcionalidades
 
@@ -218,4 +249,23 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
 
 ## Endpoints
 
-## A equipe
+## Kanban
+Kanban é um sistema visual de gestão de trabalho, que busca conduzir cada tarefa por um fluxo predefinido de trabalho.
+Em geral, o conceito de Kanban pode ser definido pelos seguintes itens:
+O sistema visual: um processo, definido em um quadro com colunas de separação, que permite dividir o trabalho em segmentos ou pelo seu status, fixando cada item em um cartão e colocando em uma coluna apropriada para indicar onde ele está em todo o fluxo de trabalho. 
+Os cartões: que descrevem o trabalho real que transita por este processo.
+A limitação do trabalho em andamento: que permite atribuir os limites de quantos itens podem estar em andamento em cada segmento ou estado do fluxo de trabalho.
+Ou seja, o Kanban é um fluxo de trabalho que busca indicar (e limitar) o trabalho em andamento — ou WIP, Work In Progress.
+O Kanban pode ser considerado também como uma metodologia ágil exatamente por ter o objetivo de evitar a procrastinação e render mais no dia a dia.
+
+## Equipe 💡 
+Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
+Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
+- ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
+- ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
+- ``Vando Rocha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Vandorc-Dev)
+- ``Gisele Souza (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/giselessouza)
+
+
+Instrutor:
+- `` Jenifer Placido `` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/)
