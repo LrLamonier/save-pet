@@ -16,19 +16,9 @@
  
 </div>
 
-<p align="center">
-  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-proposta">Proposta</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-requisitos">Requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-equipe">Equipe</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-endpoints">API</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-licença">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-</p>
-
 <div align="center">  
 
-[![Skills](https://skillicons.dev/icons?i=node,js,webpack,vscode,aws,styledcomponents,MySql,express,&perline=8)](/LrLamonier/save-pet)
+[![Skills](https://skillicons.dev/icons?i=node,js,git,github,vscode,mysql,express,&perline=8)](/LrLamonier/save-pet)
  
 </div>
 
@@ -902,4 +892,4 @@ Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não 
 
 
 Instrutor:
-- `` Jenifer Placido `` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/)
+- `` Jenifer Placido `` 
