@@ -882,6 +882,24 @@ A limitação do trabalho em andamento: que permite atribuir os limites de quant
 Ou seja, o Kanban é um fluxo de trabalho que busca indicar (e limitar) o trabalho em andamento — ou WIP, Work In Progress.
 O Kanban pode ser considerado também como uma metodologia ágil exatamente por ter o objetivo de evitar a procrastinação e render mais no dia a dia.
 
+### Regras de Negócio
+
+### Definindo as histórias de usuários (Levantamento dos Requisitos Necessários)
+- Como institução e/ou usuario eu gostaria de realizar o meu cadastro ou login para que possa ter acesso ao sistema	
+- Como usuário eu gostaria de registrar uma ocorrencia para que a instituição possa fazer o resgate do animal	
+- Como instituição eu gostaria de verificar a solicitação de resgate para que o animal possa ser resgatado	
+- Como instituição eu gostaria de alterar o resigtro da ocorrencia para que a situação do animal seja atualizada	
+- Como usuario eu gostaria de ter acesso ao status da ocorrencia para saber a situação do animal	
+- Como instituição eu gostaria de adicionar o animal para adoção para que ele possa ficar disponivel para ser adotado	
+-  Como usuario eu gostaria de me cadastrar na lista de adoção para poder me voluntariar a adoção	
+- Como usuario eu gostaria de alterar meu cadastro na lista de adoção para poder me inativar/desligar da lista se assim for necessario	
+- Como usuario eu gostaria de cadastrar um animal (próprio) na adoção (só em caso de desfazer-se do animal) para ele ficar disponivel aos voluntarios	
+- Como usuario eu gostaria de alterar o resigtro do cadastro do meu animal para que a situação de adoção seja atualizada	
+- Como instituição e/ou gostaria de excluir um animal da lista de adoção quando esse for adotado para não ficar mais disponivel	
+
+Segue nosso projeto utlizando metodologia Kanban no Trello - https://trello.com/b/T1BPg1o5/save-pet
+
+
 ## Equipe :paw_prints:
 Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
 Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
