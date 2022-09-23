@@ -2,7 +2,10 @@
 
 ![README](https://img1.wsimg.com/isteam/stock/42906/:/cr=t:0%25,l:0%25,w:100%25,h:100%25)
 
-<h1> SavePet </h1>
+  
+<h1> :feet:
+:paw_prints: SavePet :feet:
+:paw_prints: </h1>
   Um projeto desenvolvido durante o Dev For Tech I Back End - NodeJS. Um projeto de atração,  treinamento e recrutamento de Tech talents  mantido pela 
   
   [Gama Academy](https://www.gama.academy) em parceria com a [ACATE](https://www.acate.com.br) 
@@ -29,7 +32,7 @@
  
 </div>
 
-## Conteúdo
+## Conteúdo :paw_prints:
 
 - [A ideia](#a-ideia)
 - [Funcionalidades](#funcionalidades)
@@ -44,22 +47,16 @@
 - [O banco de dados](#o-banco-de-dados)
 - [Integração com outros serviços](#integração-com-outros-serviços)
 - [Quickstart](#quickstart)
-    - [1. Obter o código](#1-obter-o-codigo)
-    - [2. Instalar dependências](#2-instalar-dependencias)
-    - [3. Iniciar a API no modo desenvolvimento](#3-iniciar-a-api-no-modo-desenvolvimento)
-    - [4. Testar os endpoints e o banco de dados](#4-testar-os-endpoints-e-o-banco-de-dados)
-    - [5. Integrar a API com autenticação em duas etapas](#5-integrar-a-api-com-autenticação-em-duas-etapas)
-    - [6. Deploy da aplicação](#6-deploy-da-aplicação)
 - [Endpoints](#endpoints)
 - [A equipe](#a-equipe)
 
-## A ideia
+## A ideia :paw_prints:
 
 Olá! Somos a SavePet. Nosso objetivo é auxiliar animais em vulnerabilidade (ex. abandonados, machucados, doentes, maus tratos) por resgatar esses animais aonde estiverem, por acionar a instituição/ongs/pessoas para que essa possa fazer o resgate do animal e registre o status da ocorrencia. Se o animal estiver ferido/precisando de ajuda medica passará primeiro por cuidados antes de ser liberado para adoção, senão será encaminhado para a lista de adoção. Também contamos com a opção de cadastrar animais pra adoção ou se voluntariar pra adotar algum deles (da instituição ou cadastrado por outros).
 
-## Funcionalidades
+## Funcionalidades :paw_prints:
 
-### Criação e administração de conta
+### Criação e administração de conta	
 
 Os usuários conseguem se cadastrar fornecendo um endereço de email válido, um número de telefone para contato e um documento de identificação válido, CPF para usuários regulares e CNPJ para ONGs, clínicas/hospitais veterinários ou outras entidades.
 
@@ -71,7 +68,7 @@ Os _tokens_ de recuperação de senha e de exclusão de conta precisam necessari
 
 A sessão [integração com outros serviços](#integração-com-outros-serviços) contém mais informações sobre essas funcionalidades e como integrá-las ao SavePet.
 
-### Criação, atualização e finalização de chamados
+### Criação, atualização e finalização de chamados :poodle:	
 
 Um usuário autenticado pode criar chamados que sinalizam a ocorrência de um animal em vulnerabilidade. Para isso, um pedido deve ser feito fornecendo um título que resuma a situação sendo sinalizada, o tipo do animal em risco, uma descrição mais detalhada da situação e a localização do animal.
 
@@ -82,9 +79,9 @@ Exemplo de um _request_ de criação do chamado mostrando as coordenadas no padr
 
 Um chamado pode ter suas informações alteradas pelo usuário que o criou ou por um usuário especial com o cargo de administrador. Da mesma forma, o criador ou administrador pode sinalizar o chamado como finalizado quando a situação tiver sido resolvida. Um chamado finalizado também pode ser reaberto em até 48 horas após ter sido finalizado.
 
-## Segurança
+## Segurança :paw_prints:
 
-### Autenticação via JWT
+### Autenticação via JWT :paw_prints:
 
 A API SavePet utuliza [JSON _Web Tokens_](https://jwt.io/) via _cookie_ como forma de autenticar os usuários e permitir acesso seletivo a rotas restritas. Essa abordagem está alinhada com a proposta de um servidor [_stateless_](https://stackoverflow.com/a/5539862).
 
@@ -98,7 +95,7 @@ Ao tentar acessar uma rota restrita, o JWT é identificado no _request_ e valida
 ![Falha na autenticação](./readme-imgs/autenticacao_falha.png)<br>
 Falha na autenticação por qualquer motivo, como _cookie_ expirado, retorna um erro genérico.
 
-### Sanitização e validação de dados
+### Sanitização e validação de dados 
 
 Como medida de segurança, a _untrusted data_ enviadas nos _requests_ passam por processos que têm por objetivo prevenir diversos tipos de ataques.
 
@@ -152,13 +149,13 @@ Exemplo de erro em desenvolvimento mostrando o _stack_ de funções.
 
 Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_ENV`, a aplicação irá executar por padrão no modo produção.
 
-## O banco de dados
+## O banco de dados :paw_prints:
 
 Imagem dos objetos do banco de dados:
 
 ![Banco de dados](./readme-imgs/savepet_db.png)
 
-## Integração com outros serviços
+## Integração com outros serviços :paw_prints:
 
 A SavePet foi desenvolvida tendo em mente a integração com serviços que possibilitam a autenticação em duas etapas. Os _tokens_ de recuperação de senha e de exclusão de conta devem ser enviados para o usuário através de um canal que podemos assumir ser seguro.
 
@@ -169,7 +166,7 @@ Essa estratégia de autenticação parte do pressuposto que o email e/ou número
 
 Existem centenas de serviços com os mais variados preços, dependendo do volume de mensagens e por onde elas são enviadas. Uma boa opção gratuita é o [SendGrid](https://sendgrid.com/), que possui planos gratuitos que atendem confortavelmente aplicações pequenas.
 
-## Quickstart
+## Quickstart :paw_prints:
 
 ### 1. Obter o código
 
@@ -218,7 +215,7 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
 
     ![Captura de tela das variáveis de ambiente no Postman](./readme-imgs/postman_environment.png)
 
-- A [pasta postman](https://github.com/LrLamonier/save-pet/tree/main/postman) possui dois arquivos no formato JSON com _requests_ pré-configurados, basta importá-los dentro do Postman.
+- A pasta `postman` possui dois arquivos no formato JSON com _requests_ pré-configurados, basta importá-los dentro do Postman.
 
 - Teste os endpoints.
 
@@ -245,7 +242,7 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
     - Por esse motivo é necessário seguir boas práticas para que a sua mensagem chegue no destinatário. [Aqui](https://sendgrid.com/blog/10-tips-to-keep-email-out-of-the-spam-folder/) estão algumas sugestões de boas práticas para envio de emails.
     - Existem sites que permitem que você teste o quão "_spam_" o seu email parece. Um deles é o [UnSpam](https://unspam.email/).
 
-### 6. _Deploy_ da aplicação
+### 6. Deploy da aplicação
 
 - Após testar a aplicação no modo desenvolvimento E no modo produção, é hora de colocá-la na internet.
 
@@ -253,564 +250,9 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
 
 - O Heroku é totalmente compatível com aplicações Node e o _deploy_ pode ser feito via Git. Informações detalhadas [aqui](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
 
-## _Endpoints_
+## Endpoints :paw_prints:
 
-Caso esteja usando Postman, pegue os arquivos das rotas pré-configuardos [aqui](https://github.com/LrLamonier/save-pet/tree/main/postman).
-
-### _Endpoints_ de usuários
-
-#### Criar conta
-
-```html
-POST /usuario/signup
-```
-
-Parâmetros obrigatórios: `nome`, `email`, `tel_contato`, `cpf` OU `cnpj`, `password`, `confirmPassword`.
-
-É obrigatório enviar um CPF ou um CNPJ. O pedido retornará um erro se nenhum dos dois foi enviado ou se os dois foram enviados.
-
-Exemplo de _request_:
-
-```json
-{
-    "nome": "Lucas",
-    "email": "lucas@lucas.com",
-    "tel_contato": "12345678",
-    "cpf": "756.772.451-00",
-    "password": "12345678",
-    "confirmPassword": "12345678"
-}
-```
-\* O número de CPF do exemplo não existe, foi gerado para testagem.
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjYzOTYwNzIzLCJleHAiOjE2NjQ4MjQ3MjN9.oTth3stMNf0VJmmnzv9WY3sCpRIYmvTr94WFj1I1TBU",
-    "data": {
-        "resUser": {
-            "name": "Lucas Lamonier",
-            "email": "lucas@lucas.com"
-        }
-    }
-}
-```
-
-#### Login
-
-```html
-POST /usuario/login
-```
-
-Parâmetros obrigatórios: `email`, `password`.
-
-Exemplo de _request_:
-
-```json
-{
-    "email": "lucas@lucas.com",
-    "password": "12345678"
-}
-```
-
-Exemplo de _response_:
-
-```html
-{
-    "status": "success",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjYzOTYwNzIzLCJleHAiOjE2NjQ4MjQ3MjN9.oTth3stMNf0VJmmnzv9WY3sCpRIYmvTr94WFj1I1TBU",
-    "data": {
-        "resUser": {
-            "name": "Lucas Lamonier",
-            "email": "lucas@lucas.com"
-        }
-    }
-}
-```
-
-#### Logout
-
-```html
-POST /usuario/logout
-```
-
-Nenhum parâmetro é necessário. Simplesmente fazer um pedido GET.
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success"
-}
-```
-
-#### Alterar cadastro (requer JWT válido)
-
-```html
-PATCH /usuario/profile
-```
-
-Parâmetros opcionais: `nome`, `contato`
-
-Exemplo _request_:
-
-```json
-{
-    "nome": "Gabriel",
-    "contato": "987654321"
-}
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "usuario": {
-        "nome": "Gabriel",
-        "contato": "987654321"
-    }
-}
-```
-
-#### Solicitar deleção da conta (requer JWT válido)
-
-```http
-POST /usuario/deletar-conta
-```
-
-Parâmetro obrigátorio: `password`
-
-Mesmo estando autenticado, o  usuário precisa inserir a senha. Em caso de vazamento do JWT, usuários maliciosos não são capazes de solicitar a deleção da senha.
-
-Exemplo de _request_:
-
-```json
-{
-    "password": "12345678"
-}
-```
-
-Exemplo de _response_:
-```json
-{
-    "status": "success",
-    "deleteToken": "505b113162691459e3ab775a960dbc3c8130f578fd837db4aa95d79872fdb204"
-}
-```
-
-\* Em produção, o _token_ não seria retornado na _response_, ao invés disso, seria encaminhado via email ou por telefone.
-
-#### Deletar conta
-
-```http
-DELETE /usuario/deletar-conta
-```
-
-Nenhum parâmetro é necessário.
-
-Parâmetro obrigatório: `deleteToken`
-
-Exemplo de _request_:
-
-```json
-{
-    "status": "success",
-    "message": "Conta deletada com sucesso!"
-}
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "message": "Conta deletada com sucesso!"
-}
-```
-
-#### Solicitar alteração de senha
-
-```http
-POST /usuario/esqueci-senha
-```
-
-Parâmetro obrigatório: `email`
-
-Exemplo de _request_:
-
-```json
-{
-    "email": "lucas@lucas.com"
-}
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "message": "Um email para recuperação da senha foi enviado para este email, caso ele esteja cadastrado. O token é válido por 10 minutos.",
-    "changeToken": "1ff4f0d09b14817c818da3a90a6516448c0428fea59ef3e63920e028bba2af13"
-}
-```
-
-\* Assim como no pedido de deleção de conta, o _token_, em produção, não seria enviado na resposta.
-
-#### Alterar senha
-
-```http
-POST /usuario/esqueci-senha
-```
-
-#### Ver meu perfil (requer JWT válido)
-
-```http
-GET /usuario/profile
-```
-
-Nenhum parâmetro necessário.
-
-Exemplo de _response_:
-
-```json
-{
-    "nome": "Lucas",
-    "email": "lucas@lucas.com",
-    "contato": "12345678",
-    "id": {
-        "cpf": "75677245100"
-    }
-}
-```
-
-#### Ver todos os usuários (requer JWT válido de um usuário do tipo administrador)
-
-```html
-GET /usuario/lista-contas
-```
-
-Nenhum parâmetro é necessário.
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "data": [
-        {
-            "id_usuario": 3,
-            "nome": "Lucas",
-            "email": "lucas@lucas.com",
-            "contato": "12345678",
-            "cpf": "75677245100",
-            "cnpj": null,
-            "isAdmin": null
-        },
-        {
-            "id_usuario": 4,
-            "nome": "Thaís",
-            "email": "thais@thais.com",
-            "contato": "12345678",
-            "cpf": null,
-            "cnpj": "87381182000176",
-            "isAdmin": null
-        },
-        ...
-}
- ```
-
-#### Procurar usuário pelo ID
-
-```http
-GET /usuario/u/<ID do usuário>
-```
-
-O parâmetro necessário é a ID, que deve ser colocada no endereço do _request_.
-
-Exemplo de _request_:
-
-```html
-/usuario/u/3
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "nome": "Lucas",
-    "email": "lucaslucas@lucas.com",
-    "contato": "12345678"
-}
-```
-
-### _Endpoints_ de chamados
-
-#### Criar novo chamado (requer JWT válido)
-
-```http
-POST /chamados/meus-chamados
-```
-
-Parâmetros obrigatórios: `titulo`, `tipoPet`, `descricao`, `local`
-
-O parâmetro `local` deve seguir o padrão internacional WGS com no mínimo 5 casas decimais. Mais detalhes na sessão de [funcionalidades](#criação-atualização-e-finalização-de-chamados).
-
-Exemplo de _request_:
-
-```json
-{
-    "titulo": "Cachorro na rua São Jorge",
-    "tipoPet": "Cachorro",
-    "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-    "local": "-16.719490527908334, -49.19679150458935"
-}
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "data": {
-        "id_chamado": 10,
-        "titulo": "Cachorro na rua São Jorge",
-        "tipoPet": "Cachorro",
-        "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-        "local": "-16.719490527908334,-49.19679150458935",
-        "dtAbertura": 1663964102152,
-        "id_usuario_chamado": 9
-    }
-}
-```
-
-\* Ao objeto do novo chamado é adicionado a _timestamp_ de criação e a ID do usuário que o criou.
-
-#### Editar chamado (requer JWT válido do usuário que criou o chamado ou de um administrador)
-
-```http
-PATCH /chamados/meus-chamados
-```
-
-Parâmetro obrigatório: `id_chamado`
-Parâmetros opcionais: `titulo`, `tipoPet`, `descricao`, `local`
-
-Exemplo _request_:
-
-```json
-{
-    "id_chamado": "11",
-    "descricao": "Gato preto avistado na rua São Jorge."
-}
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "chamadoAtualizado": {
-        "descricao": "Gato preto avistado na rua São Jorge."
-    }
-}
-```
-
-#### Deletar chamado (requer JWT válido do usuário que criou o chamado ou de um administrador)
-
-```http
-DELETE /chamados/meus-chamados
-```
-
-Parâmetro obrigatório: `id_chamado`
-
-Exemplo de _request_:
-
-```json
-{
-    "id_chamado": "8"
-}
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "message": "Chamado deletado com sucesso!"
-}
-```
-
-#### Buscar chamados por ID de usuário
-
-```html
-GET /usuario/chamados/usuario/<ID do usuário>
-```
-
-Parâmetro obrigatório: ID do usuário inserida diretamente na URL.
-
-Exemplo de _request_:
-
-```html
-/usuario/usuario/9
-```
-
-Exemplo de _response_:
-
-```json
-{
-    "status": "success",
-    "results": 1,
-    "chamados": [
-        {
-            "id_chamado": 10,
-            "titulo": "Cachorro na rua São Jorge",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.719490527908334,-49.19679150458935",
-            "dtAbertura": "1663964102152",
-            "concluido": false,
-            "dtConclusao": null,
-            "id_usuario_chamado": 9
-        }
-    ]
-}
-```
-
-#### Buscar todos os chamados
-
-```html
-GET /chamados
-```
-
-A rota para buscar todos os chamados possui um parâmetro opcional que indica a localização do usuário. Quando esse parâmetro é incluído no _request_, os resultados são ordenados por menor distância entre o chamado e o usuário.
-
-A localização do usuário deve ser passada via _query string_ no [padrão WGS](#criação-atualização-e-finalização-de-chamados) com, no mínimo, 5 casas decimais:
-
-```html
-GET /chamados?loc=<Coordenadas do usuário>
-```
-
-Caso as coordenadas passadas na _query string_ não sejam válidas, a ordenação padrão será retornada.
-
-Exemplo de _request_:
-
-```html
-GET /chamados?loc=-16.68087323800827, -49.2556861602635
-```
-
-Exemplo de _response_ sem coordenadas ou com coordenadas inválidas:
-
-```json
-{
-    "status": "success",
-    "results": 3,
-    "chamados": [
-        {
-            "id_chamado": 1,
-            "titulo": "Distância 3",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.75040632267,-49.127321257264015",
-            "dtAbertura": "1663964864085",
-            "concluido": false,
-            "dtConclusao": null,
-            "id_usuario_chamado": 9
-        },
-        {
-            "id_chamado": 2,
-            "titulo": "Distância 1",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.712924528453627,-49.2162418455575",
-            "dtAbertura": "1663964886416",
-            "concluido": false,
-            "dtConclusao": null,
-            "id_usuario_chamado": 9
-        },
-        {
-            "id_chamado": 3,
-            "titulo": "Distância 2",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.721473656575146,-49.18705941310598",
-            "dtAbertura": "1663964906160",
-            "concluido": false,
-            "dtConclusao": null,
-            "id_usuario_chamado": 9
-        }
-    ]
-}
-```
-
-Exemplo com coordenadas (os títulos se referem à distância, 1 para menor, 3 para maior):
-
-```json
-{
-    "status": "success",
-    "results": 3,
-    "chamados": [
-        {
-            "id_chamado": 2,
-            "titulo": "Distância 1",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.712924528453627,-49.2162418455575",
-            "id_usuario_chamado": 9,
-            "distancia": 5.51
-        },
-        {
-            "id_chamado": 3,
-            "titulo": "Distância 2",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.721473656575146,-49.18705941310598",
-            "id_usuario_chamado": 9,
-            "distancia": 8.59
-        },
-        {
-            "id_chamado": 1,
-            "titulo": "Distância 3",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.75040632267,-49.127321257264015",
-            "id_usuario_chamado": 9,
-            "distancia": 15.7
-        }
-    ]
-}
-```
-
-#### Meus chamados (requer JWT válido)
-
-```html
-GET /chamados/meus-chamados
-```
-
-Nenhum parâmetro é necessário.
-
-Exemplo _response_:
-
-```json
-{
-    "status": "success",
-    "results": 1,
-    "myEvents": [
-        {
-            "id_chamado": 1,
-            "titulo": "Distância 3",
-            "tipoPet": "Cachorro",
-            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
-            "local": "-16.75040632267,-49.127321257264015",
-            "dtAbertura": "1663964864085",
-            "concluido": false,
-            "dtConclusao": null,
-            "id_usuario_chamado": 9
-        }
-}
-```
-
-## Kanban
+## Kanban :paw_prints:
 Kanban é um sistema visual de gestão de trabalho, que busca conduzir cada tarefa por um fluxo predefinido de trabalho.
 Em geral, o conceito de Kanban pode ser definido pelos seguintes itens:
 O sistema visual: um processo, definido em um quadro com colunas de separação, que permite dividir o trabalho em segmentos ou pelo seu status, fixando cada item em um cartão e colocando em uma coluna apropriada para indicar onde ele está em todo o fluxo de trabalho. 
@@ -819,7 +261,7 @@ A limitação do trabalho em andamento: que permite atribuir os limites de quant
 Ou seja, o Kanban é um fluxo de trabalho que busca indicar (e limitar) o trabalho em andamento — ou WIP, Work In Progress.
 O Kanban pode ser considerado também como uma metodologia ágil exatamente por ter o objetivo de evitar a procrastinação e render mais no dia a dia.
 
-## Equipe 💡 
+## Equipe :paw_prints:
 Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
 Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
 - ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
