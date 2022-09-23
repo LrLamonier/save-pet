@@ -1,9 +1,7 @@
 // const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const { Usuario } = require("../models");
+const { Usuario } = require("../models/01_usuario");
 
-//////////////////////////////////////////////////////////
-// buscar todos os usuários
 exports.allUsers = catchAsync(async (req, res, next) => {
   const allUsers = await Usuario.findAll();
   console.log(allUsers);
@@ -12,8 +10,6 @@ exports.allUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-//////////////////////////////////////////////////////////
-// editar perfil
 exports.editProfile = catchAsync(async (req, res, next) => {
   const { nome, email, contato } = req.body;
 
