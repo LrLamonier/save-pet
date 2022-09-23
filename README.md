@@ -883,4 +883,14 @@ Exemplo _response_:
 }
 ```
 
+## Informações adicionais
+
+A API SavePet está preparada para lidar com erros críticos.
+
+![Funções de uncaughtException e unhandledRejection](./readme-imgs/finish.png)
+
+Por fim, a aplicação é capaz de responder adequadamente a SIGTERMs.
+
+![Função de SIGTERM](./readme-imgs/finish_sigterm.png)
+
 [Voltar para o topo](#conteúdo)
