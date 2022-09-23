@@ -67,7 +67,8 @@
 
 ## A ideia 
 
-Olá! Somos a SavePet. Nosso objetivo é auxiliar animais em vulnerabilidade (ex. abandonados, machucados, doentes, maus tratos) por resgatar esses animais aonde estiverem, por acionar a instituição/ongs/pessoas para que essa possa fazer o resgate do animal e registre o status da ocorrencia. Se o animal estiver ferido/precisando de ajuda medica passará primeiro por cuidados antes de ser liberado para adoção, senão será encaminhado para a lista de adoção. Também contamos com a opção de cadastrar animais pra adoção ou se voluntariar pra adotar algum deles (da instituição ou cadastrado por outros).
+De acordo com a (OMS), somente no Brasil, cerca de 30 milhões de animais estão abandonados, sendo aproximadamente 20 milhões de cães e 10 milhões de gatos. Em grandes metrópoles, para cada cinco habitantes há um cachorro. Desses, 10% estão abandonados.  Em 2020, durante a pandemia, a quantidade de cães e gatos resgatados subiu 70%, segundo levantamento da Ampara Animal, associação que oferece suporte a protetores de animais. Daí nascemos nós. Somos a SavePet. Nosso objetivo é auxiliar animais em vulnerabilidade (ex. abandonados, machucados, doentes, maus tratos) por resgatar esses animais aonde estiverem, por acionar a instituição/ongs/pessoas para que essa possa fazer o resgate do animal e registre o status da ocorrencia. Se o animal estiver ferido/precisando de ajuda medica passará primeiro por cuidados antes de ser liberado para adoção, senão será encaminhado para a lista de adoção. Também contamos com a opção de cadastrar animais pra adoção ou se voluntariar pra adotar algum deles (da instituição ou cadastrado por outros). Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos resgatados ou doados. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
+Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
 
 ## Funcionalidades 
 
@@ -900,10 +901,6 @@ https://trello.com/b/T1BPg1o5/save-pet
 - ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
 - ``Vando Rocha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Vandorc-Dev)
 - ``Gisele Souza (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/giselessouza)
- 
-## Motivação
-De acordo com a (OMS), somente no Brasil, cerca de 30 milhões de animais estão abandonados, sendo aproximadamente 20 milhões de cães e 10 milhões de gatos. Em grandes metrópoles, para cada cinco habitantes há um cachorro. Desses, 10% estão abandonados.  Em 2020, durante a pandemia, a quantidade de cães e gatos resgatados subiu 70%, segundo levantamento da Ampara Animal, associação que oferece suporte a protetores de animais. Daí nascemos nós. Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos resgatados ou doados. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
-Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
 
 Instrutor:
 - `` Jenifer Placido `` 
