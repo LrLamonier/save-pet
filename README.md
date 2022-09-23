@@ -648,4 +648,135 @@ Exemplo de _response_:
 
 #### Buscar todos os chamados
 
+```html
+GET /chamados
+```
+
+A rota para buscar todos os chamados possui um parâmetro opcional que indica a localização do usuário. Quando esse parâmetro é incluído no _request_, os resultados são ordenados por menor distância entre o chamado e o usuário.
+
+A localização do usuário deve ser passada via _query string_ no [padrão WGS](#criação-atualização-e-finalização-de-chamados) com, no mínimo, 5 casas decimais:
+
+```html
+GET /chamados?loc=<Coordenadas do usuário>
+```
+
+Caso as coordenadas passadas na _query string_ não sejam válidas, a ordenação padrão será retornada.
+
+Exemplo de _request_:
+
+```html
+GET /chamados?loc=-16.68087323800827, -49.2556861602635
+```
+
+Exemplo de _response_ sem coordenadas ou com coordenadas inválidas:
+
+```json
+{
+    "status": "success",
+    "results": 3,
+    "chamados": [
+        {
+            "id_chamado": 1,
+            "titulo": "Distância 3",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.75040632267,-49.127321257264015",
+            "dtAbertura": "1663964864085",
+            "concluido": false,
+            "dtConclusao": null,
+            "id_usuario_chamado": 9
+        },
+        {
+            "id_chamado": 2,
+            "titulo": "Distância 1",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.712924528453627,-49.2162418455575",
+            "dtAbertura": "1663964886416",
+            "concluido": false,
+            "dtConclusao": null,
+            "id_usuario_chamado": 9
+        },
+        {
+            "id_chamado": 3,
+            "titulo": "Distância 2",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.721473656575146,-49.18705941310598",
+            "dtAbertura": "1663964906160",
+            "concluido": false,
+            "dtConclusao": null,
+            "id_usuario_chamado": 9
+        }
+    ]
+}
+```
+
+Exemplo com coordenadas (os títulos se referem à distância, 1 para menor, 3 para maior):
+
+```json
+{
+    "status": "success",
+    "results": 3,
+    "chamados": [
+        {
+            "id_chamado": 2,
+            "titulo": "Distância 1",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.712924528453627,-49.2162418455575",
+            "id_usuario_chamado": 9,
+            "distancia": 5.51
+        },
+        {
+            "id_chamado": 3,
+            "titulo": "Distância 2",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.721473656575146,-49.18705941310598",
+            "id_usuario_chamado": 9,
+            "distancia": 8.59
+        },
+        {
+            "id_chamado": 1,
+            "titulo": "Distância 3",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.75040632267,-49.127321257264015",
+            "id_usuario_chamado": 9,
+            "distancia": 15.7
+        }
+    ]
+}
+```
+
+#### Meus chamados (requer JWT válido)
+
+```html
+GET /chamados/meus-chamados
+```
+
+Nenhum parâmetro é necessário.
+
+Exemplo _response_:
+
+```json
+{
+    "status": "success",
+    "results": 1,
+    "myEvents": [
+        {
+            "id_chamado": 1,
+            "titulo": "Distância 3",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.75040632267,-49.127321257264015",
+            "dtAbertura": "1663964864085",
+            "concluido": false,
+            "dtConclusao": null,
+            "id_usuario_chamado": 9
+        }
+}
+```
+
 ## A equipe
