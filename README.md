@@ -116,7 +116,9 @@ Exemplo de erro em desenvolvimento mostrando o _stack_ de funções.
 Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_ENV`, a aplicação irá executar por padrão no modo produção.
 
 ## O banco de dados
-Imagem do objetos do banco d dados:
+
+Imagem dos objetos do banco de dados:
+
 ![Banco de dados](./readme-imgs/savepet_db.png)
 
 ## Integração com outros serviços
@@ -124,13 +126,95 @@ Imagem do objetos do banco d dados:
 A SavePet foi desenvolvida tendo em mente a integração com serviços que possibilitam a autenticação em duas etapas. Os _tokens_ de recuperação de senha e de exclusão de conta devem ser enviados para o usuário através de um canal que podemos assumir ser seguro.
 
 ![Resposta do servidor contendo um _token_ de recuperação de senha](./readme-imgs/integracao_token.png)<br>
-Acima um exemplo de resposta contendo um token de recuperação de senha. O código neste repositório envia o token diretamente na resposta, o que é uma falha crítica de segurança. Quando for colocar essa API em produção, siga os passos descritos em [integrar serviço de autenticação em duas etapas.](#integrar-serviço-de-autenticação-em-duas-etapas)
+Acima um exemplo de resposta contendo um token de recuperação de senha. O código neste repositório envia o token diretamente na resposta, o que é uma falha crítica de segurança. Quando for colocar essa API em produção, siga os passos descritos em [integrar a API com autenticação em duas etapas.](#integrar-api-com-autenticação-em-duas-etapas)
 
 Essa estratégia de autenticação parte do pressuposto que o email e/ou número de telefone do usuário são confiáveis. Com esse princípio estabelecido, a abordagem mais direta é integrar o sistema com APIs que enviam mensagens, seja por email, SMS ou através de aplicativos como o WhatsApp.
 
 Existem centenas de serviços com os mais variados preços, dependendo do volume de mensagens e por onde elas são enviadas. Uma boa opção gratuita é o [SendGrid](https://sendgrid.com/), que possui planos gratuitos que atendem confortavelmente aplicações pequenas.
 
 ## Quickstart
+
+### 1. Obter o código
+
+- Faça um _fork_ e um clone desse repositório para executar o código localmente. Mais informações sobre esse processo [aqui](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+
+### 2. Instalar dependências
+
+- Caso não tenha o Node.js, faça o download [aqui](https://nodejs.org/en/) e instale.
+- Da mesma forma, baixe e instale o [MySQL](https://dev.mysql.com/downloads/installer/), caso não o tenha.
+- Abra o CLI do Node.js e navegue até a pasta do projeto OU abra o terminal integrado do seu editor de código favorito na pasta do projeto.
+- Execute o comando `npm install`.
+
+### 3. Iniciar a API no modo desenvolvimento
+
+- Considerações sobre o funcionamento da API
+
+    - Sugerimos que o processo de desenvolvimento da API seja feito com a ajuda do [nodemon](https://www.npmjs.com/package/nodemon), por isso ele está na lista das dependências instaladas.
+
+    - A API SavePet pode ser iniciada em dois modos: produção ou desenvolvimento. Isso afeta como as respostas são enviadas para o usuário. Mais informações em [_error handling_ em desenvolvimento](#error-handling-em-desenvolvimento).
+
+    - Os scripts para iniciar a API em cada um dos modos são:
+
+    ```json
+        "scripts": {
+            "start": "node server",
+            "start:prod": "set NODE_ENV=production & nodemon server.js",
+            "start:dev": "set NODE_ENV=development & nodemon server.js"
+        },
+    ```
+
+- Ainda na pasta do projeto, execute o comando `npm run start:dev`.
+
+- A API estará agora rodando no modo desenvolvimento.
+
+- Os modelos do banco de dados estão configurados para gerar as tabelas automaticamente.
+
+- Sugerimos a utilização do [Workbench](https://dev.mysql.com/downloads/workbench/) para manipular o banco de dados.
+
+### 4. Testar os _endpoints_ e o banco de dados
+
+- Sugerimos o uso do [Postman](https://www.postman.com/downloads/) para a testagem das rotas.
+
+- No Postman, defina um ambiente com duas variáveis:
+    - URL: o endereço do seu `localhost`;
+    - jwt: em branco (as rotas de autenticação irão editar essa variável dinamicamente).
+
+    ![Captura de tela das variáveis de ambiente no Postman](./readme-imgs/postman_environment.png)
+
+- A pasta `postman` possui dois arquivos no formato JSON com _requests_ pré-configurados, basta importá-los dentro do Postman.
+
+- Teste os endpoints.
+
+### 5. Integrar a API com autenticação em duas etapas
+
+- Escolha um serviço que atenda ao seu caso de uso e se familiarize com a documentação. Recomendamos o [SendGrid](https://sendgrid.com/).
+
+- A integração com o serviço externo será feita no arquivo `./controllers/authController.js`.
+
+- Alteração de senha:
+    - A função responsável por gerar a solicitação é a `resetPasswordRequest()` (linha 169).
+    - Insira o código referente à conexão com o _endpoint_ do serviço de mensagem abaixo da linha 198, enviando a variável `changeToken`, que é o _token_ de troca.
+    - Encapsule o código de conexão em um bloco `try / catch` e certifique-se que eventuais erros são manipulados corretamente.
+    - Na resposta, `res.status(201)...` (originalmente na linha 199), retire o changeToken do corpo da resposta.
+
+- Encerramento da conta:
+    - Da mesma forma que na alteração de senha, identifique a função de geração do _token_ para exclusão de conta: `deleteAccountRequest()`, linha 258.
+    - Insira o código da API externa abaixo da linha 281.
+    - Encapsule o código e confira o manuseio de erros.
+    - Na resposta, originalmente na linha 282, remova o `deleteToken` do corpo.
+
+- Boas práticas no envio de mensagens:
+    - Devido à quantidade imensa de _spam_, emails maliciosos e outros tipo de lixo eletrônico, as ferramentas de comunicação modernas possuem sistemas robustos que tentam diminuir esse problema.
+    - Por esse motivo é necessário seguir boas práticas para que a sua mensagem chegue no destinatário. [Aqui](https://sendgrid.com/blog/10-tips-to-keep-email-out-of-the-spam-folder/) estão algumas sugestões de boas práticas para envio de emails.
+    - Existem sites que permitem que você teste o quão "_spam_" o seu email parece. Um deles é o [UnSpam](https://unspam.email/).
+
+### 6. Deploy da aplicação
+
+- Após testar a aplicação no modo desenvolvimento E no modo produção, é hora de colocá-la na internet.
+
+- Dos milhares de serviços de hospedagem da internet, pagos ou gratuitos, a plataforma [Heroku](https://www.heroku.com/) é uma opção excelente para aplicações pequenas. O modo gratuito tem limitações, como por exemplo suspender a aplicação caso não ocorra nenhum acesso durante um certo período e o tempo de _cold start_ pode chegar a 20 segundos.
+
+- O Heroku é totalmente compatível com aplicações Node e o _deploy_ pode ser feito via Git. Informações detalhadas [aqui](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
 
 ## Endpoints
 

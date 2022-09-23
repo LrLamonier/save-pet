@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "8e7ecb9a-e1dc-4e60-b5dc-b0139cc90f9c",
+		"name": "Chamados",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20260104"
+	},
+	"item": [
+		{
+			"name": "Criar novo chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\": \"Cachorro na rua São Jorge\",\r\n    \"tipoPet\": \"Cachorro\",\r\n    \"descricao\": \"Cachorro preto de porte médio mancando avistado na rua São Jorge\",\r\n    \"local\": \"-16.719490527908334, -49.19679150458935\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}chamados/meus-chamados",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"path": [
+						"meus-chamados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_chamado\": \"8\",\r\n    \"descricao\": \"Gato preto avistado na rua São Jorge.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}chamados/meus-chamados",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"path": [
+						"meus-chamados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_chamado\": \"8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}chamados/meus-chamados",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"path": [
+						"meus-chamados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar chamados por ID de usuário",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}chamados/usuario/1",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"path": [
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar todos os chamados",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}chamados/",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar todos os chamados distância",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}chamados?loc=-16.68087323800827, -49.2556861602635",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"query": [
+						{
+							"key": "loc",
+							"value": "-16.68087323800827, -49.2556861602635"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Meus chamados",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}chamados/meus-chamados",
+					"host": [
+						"{{URL}}chamados"
+					],
+					"path": [
+						"meus-chamados"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
