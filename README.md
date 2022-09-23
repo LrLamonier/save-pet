@@ -32,6 +32,8 @@ do _token_ é comparada com a _timestamp_ da última troca de senha do usuário.
 caso de comprometimento da conta e subsequente troca de senha por parte do
 usuário, todos os _tokens_ emitidos antes da troca se tornam inválidos.
 
+![Falha na autenticação](./readme-imgs/autenticacao_falha.png)
+
 ### Sanitização e validação de dados
 
 Como medida de segurança, a _untrusted data_ enviadas nos _requests_ passam por
