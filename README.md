@@ -99,3 +99,15 @@ uma camada a mais de segurança na
 ## Endpoints
 
 ## A equipe
+
+### Kanban
+
+https://www1.folha.uol.com.br/cotidiano/2022/08/numero-de-animais-abandonados-cresce-mas-adocao-nao-acompanha.shtml
+https://www1.folha.uol.com.br/blogs/bom-pra-cachorro/2022/06/censo-pet-caes-lideram-ranking-de-animais-de-estimacao-gatos-tem-alta.shtml
+https://portal.al.go.leg.br/noticias/125409/projeto-que-propoe-mudar-cenario-de-animais-abandonados-aguarda-votacao-na-ccj#:~:text=De%20acordo%20com%20a%20Organiza%C3%A7%C3%A3o,cinco%20habitantes%20h%C3%A1%20um%20cachorro.
+
+## Backlog
+
+upload fotos
+
+## Agradecimentos
