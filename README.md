@@ -154,6 +154,57 @@ Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_EN
 Imagem dos objetos do banco de dados:
 
 ![Banco de dados](./readme-imgs/savepet_db.png)
+Para criar as tabelas previamente no banco é necessário está com o Mysql instalando e rodando. Executando o script abaixo criamos todos os objetos do banco.
+```sql
+# Criar banco 
+CREATE DATABASE savepet_db;
+USE savepet_db;
+
+#Criar tabela de usuários
+CREATE TABLE usuarios(
+	id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	contato VARCHAR(50) NOT NULL,
+	cpf VARCHAR(11),
+	cnpj VARCHAR(14),
+	password VARCHAR(50) NOT NULL,
+	isAdmin BOOLEAN,
+	dtSenhaAlter VARCHAR(50),
+    dtTokenAlterSenha VARCHAR(50),
+    dtAlterTokenExpir VARCHAR(50),
+    dtTokenDeletar VARCHAR(50),
+    dtTokenDelExpir VARCHAR(50)
+);
+# Criar tabela de chamados
+CREATE TABLE chamados(
+	id_chamado INT AUTO_INCREMENT PRIMARY KEY,
+	ttulo VARCHAR(100) NOT NULL,
+	tipoPet VARCHAR(100) NOT NULL,
+	descricao VARCHAR(50) NOT NULL,
+    local VARCHAR(11) NOT NULL,
+    dtAbertura VARCHAR(20) NOT NULL,
+    concluido BOOLEAN,
+    dtConclusao VARCHAR(20)
+);
+
+#Criar tabala de adocão
+CREATE TABLE adocao(
+	id_adocao INT AUTO_INCREMENT PRIMARY KEY,
+	titulo VARCHAR(100) NOT NULL,
+	tipoPet VARCHAR(100) NOT NULL,
+	descricao VARCHAR(50) NOT NULL,
+    contato VARCHAR(50)
+);
+
+#Adicionar coluna para guardarchave estrangeira. Adicionar relação
+alter table chamados add column id_usuario_chamado int;
+alter table chamados add foreign key(id_usuario_chamado) references usuarios(id_usuario);
+
+#Adicionar coluna para guardarchave estrangeira. Adicionar relação
+alter table adocao add column id_usuario_adocao int;
+alter table adocao add foreign key(id_usuario_adocao) references usuarios(id_usuario);
+```
 
 ## Integração com outros serviços :paw_prints:
 
