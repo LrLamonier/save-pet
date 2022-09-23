@@ -7,7 +7,7 @@
     "start": "node server",
     "startdev": "nodemon server --ignore client",
     "swagger": "node swagger",
-    "test": "NODE_ENV=test& jest --runInBand"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
