@@ -4,25 +4,35 @@ const userController = require("../controllers/userController");
 
 const router = express.Router();
 
-//buscar usuários
-router.get("/", userController.allUsers);
+router.get("/u/:id", userController.getUserByID);
 
-// criar conta
 router.post("/signup", authController.signup);
 
-// login
 router.post("/login", authController.login);
 
-// logout
 router.post("/logout", authController.logout);
 
-// deletar conta
-// router.get("/", userController.allUsers);
+router
+  .route("/esqueci-senha")
+  .post(authController.resetPasswordRequest)
+  .patch(authController.resetPassword);
 
-// ver perfil
-// router.get("/profile", userController.perfil);
+router
+  .route("/deletar-conta")
+  .post(authController.protect, authController.deleteAccountRequest)
+  .delete(authController.deleteAccount);
 
-// editar perfil
-router.patch("/profile", authController.protect, userController.editProfile);
+router.use(authController.protect);
+
+router
+  .route("/profile")
+  .get(userController.myProfile)
+  .patch(userController.editProfile);
+
+router.get(
+  "/lista-contas",
+  authController.restrictAdmin,
+  userController.allUsers
+);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-// const AppError = require("../utils/appError");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const { Usuario } = require("../models");
 const jwt = require("jsonwebtoken");
@@ -6,19 +6,17 @@ const { cpf, cnpj } = require("cpf-cnpj-validator");
 const validator = require("validator");
 const { promisify } = require("util");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
-// criar JWT
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
-// enviar JWT
 const createSendToken = (user, statusCode, req, res) => {
-  const token = signToken(user.dataValues.id); // colocar a id que identifica o usuário no banco de dados
+  const token = signToken(user.dataValues.id_usuario);
 
-  // configurar cookie
   const cookieOptions = {
     expiresIn: new Date(
       Date.now() + process.env.JWT_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -26,19 +24,13 @@ const createSendToken = (user, statusCode, req, res) => {
     httpOnly: true,
   };
 
-  // inserir cookie na resposta
   res.cookie("jwt", token, cookieOptions);
 
-  // remover a senha do usuário do corpo do request
-  user.password = undefined;
-
-  // preparar resposta, extrair dados do objeto user
   const resUser = {
     name: user.dataValues.nome,
     email: user.dataValues.email,
   };
 
-  // enviar resposta
   res.status(statusCode).json({
     status: "success",
     token,
@@ -46,8 +38,6 @@ const createSendToken = (user, statusCode, req, res) => {
   });
 };
 
-//////////////////////////////////////////////////////////
-// criação de conta
 exports.signup = catchAsync(async (req, res, next) => {
   const dataError = [];
 
@@ -72,20 +62,23 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 
   if (req.body.cpf) {
-    req.body.cpf = req.body.cpf.replace(/./g, "").replace(/-/g, "");
+    req.body.cpf = req.body.cpf.replace(/[.]/g, "").replace(/[-]/g, "");
   }
-  if (req.body.cpf && !cpf.isValid(newCPF)) {
+  if (req.body.cpf && !cpf.isValid(req.body.cpf)) {
     dataError.push("CPF inválido.");
   }
 
   if (req.body.cnpj) {
-    req.body.cnpj = req.body.cnpj.replace(/./g, "").replace(/-/g, "");
+    req.body.cnpj = req.body.cnpj
+      .replace(/[.]/g, "")
+      .replace(/[-]/g, "")
+      .replace(/[/]/g, "");
   }
-  if (req.body.cnpj && !cnpj.isValid(req.body.cnpj * 1)) {
+  if (req.body.cnpj && !cnpj.isValid(req.body.cnpj)) {
     dataError.push("CNPJ inválido.");
   }
 
-  if (req.body.senha !== req.body.confirmSenha) {
+  if (req.body.password !== req.body.confirmPassword) {
     dataError.push("As senhas não são iguais.");
   }
 
@@ -99,7 +92,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     );
   };
 
-  if (!req.body.senha || !validatePassword(req.body.senha)) {
+  if (!req.body.password || !validatePassword(req.body.password)) {
     dataError.push("Senha inválida.");
   }
 
@@ -114,7 +107,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError("Este e-mail já está cadastrado!", 400));
   }
 
-  const senhaCriptografada = await bcrypt.hash(req.body.senha, 10);
+  const senhaCriptografada = await bcrypt.hash(req.body.password, 10);
 
   const newUser = {
     nome: req.body.nome,
@@ -122,7 +115,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     contato: req.body.tel_contato,
     cpf: req.body.cpf || undefined,
     cnpj: req.body.cnpj || undefined,
-    senha: senhaCriptografada,
+    password: senhaCriptografada,
   };
 
   const createdUser = await Usuario.create(newUser);
@@ -137,20 +130,16 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 
   // envio de e-mail de confirmação de conta
-
   createSendToken(createdUser, 201, req, res);
 });
 
-//////////////////////////////////////////////////////////
-// login
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, senha } = req.body;
+  const { email, password } = req.body;
 
-  if (!email || !senha) {
+  if (!email || !password) {
     return next(new AppError("Usuário ou senha inválidos!", 401));
   }
 
-  // encontrar usuário no banco de dados
   const user = await Usuario.findOne({
     where: {
       email,
@@ -161,20 +150,15 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("Email não cadastrado!", 404));
   }
 
-  // validar se a senha está correta
-  const passwordMatch = await bcrypt.compare(senha, user.senha);
+  const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) {
-    return next(new AppError("Usuário ou senha inválidos!", 401));
+    return next(new AppError("Senha incorreta!", 401));
   }
 
-  // enviar JWT
   createSendToken(user, 200, req, res);
 });
 
-// );
-
-// logout
-exports.logout = (_, res) => {
+exports.logout = (req, res) => {
   res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 1),
     httpOnly: true,
@@ -182,28 +166,158 @@ exports.logout = (_, res) => {
   res.status(200).json({ status: "success" });
 };
 
-//////////////////////////////////////////////////////////
-// deletar conta
-exports.deleteAccount = catchAsync(async (req, res, next) => {
-  // encontrar o usuário no banco de dados e deletar
-  await Usuario.destroy({
+exports.resetPasswordRequest = catchAsync(async (req, res, next) => {
+  const user = await Usuario.findOne({
     where: {
-      id: req.user.id,
+      email: req.body.email,
+    },
+  });
+  if (!user) {
+    return res.status(200).json({
+      status: "success",
+      message:
+        "Um email para recuperação da senha foi enviado para este email, caso ele esteja cadastrado. O token é válido por 10 minutos.",
+    });
+  }
+
+  const changeToken = crypto.randomBytes(32).toString("hex");
+
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(changeToken)
+    .digest("hex");
+
+  const tokenExpires = Date.now() + 10 * 60 * 1000;
+
+  user.set({
+    dtTokenAlterSenha: hashedToken,
+    dtAlterTokenExpir: tokenExpires,
+  });
+
+  user.save();
+
+  res.status(201).json({
+    status: "success",
+    message:
+      "Um email para recuperação da senha foi enviado para este email, caso ele esteja cadastrado. O token é válido por 10 minutos.",
+    changeToken,
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  if (!req.body.changeToken) {
+    return next(new AppError("Token inválido!", 400));
+  }
+
+  const validatePassword = (password) => {
+    return (
+      password.length >= 8 &&
+      validator.isWhitelisted(
+        password,
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXWYZ!@#$%&*()_-+=0123456789"
+      )
+    );
+  };
+
+  if (!req.body.password || !validatePassword(req.body.password)) {
+    return next(new AppError("Senha inválida!", 400));
+  }
+
+  if (
+    !req.body.confirmPassword ||
+    req.body.confirmPassword !== req.body.password
+  ) {
+    return next(new AppError("As senhas não conferem.", 400));
+  }
+
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.body.changeToken)
+    .digest("hex");
+
+  const user = await Usuario.findOne({
+    where: {
+      dtTokenAlterSenha: hashedToken,
     },
   });
 
-  // fazer logout
+  if (!user || Date.now() > user.dataValues.dtAlterTokenExpir) {
+    return next(new AppError("Token inválido!", 400));
+  }
+
+  const senhaCriptografada = await bcrypt.hash(req.body.password, 10);
+
+  user.set({
+    password: senhaCriptografada,
+  });
+  user.save();
+
+  createSendToken(user, 200, req, res);
+});
+
+exports.deleteAccountRequest = catchAsync(async (req, res, next) => {
+  const passwordMatch = await bcrypt.compare(
+    req.body.password,
+    req.user.password
+  );
+  if (!passwordMatch) {
+    return next(new AppError("Senha inválida!", 401));
+  }
+
+  const deleteToken = crypto.randomBytes(32).toString("hex");
+
+  const encryptedToken = crypto
+    .createHash("sha256")
+    .update(deleteToken)
+    .digest("hex");
+
+  const tokenExpires = Date.now() + 10 * 60 * 1000;
+
+  req.user.set({
+    dtTokenDeletar: encryptedToken,
+    dtTokenDelExpir: tokenExpires,
+  });
+  req.user.save();
+
+  res.status(201).json({
+    status: "success",
+    deleteToken,
+  });
+});
+
+exports.deleteAccount = catchAsync(async (req, res, next) => {
+  if (!req.body.deleteToken) {
+    return next(new AppError("Token inválido!", 400));
+  }
+
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.body.deleteToken)
+    .digest("hex");
+
+  const user = await Usuario.findOne({
+    where: {
+      dtTokenDeletar: hashedToken,
+    },
+  });
+
+  if (!user || Date.now() > user.dataValues.dtTokenDelExpir) {
+    return next(new AppError("Token inválido!", 400));
+  }
+
+  await user.destroy();
+
   res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 1),
     httpOnly: true,
   });
 
-  // resposta
-  res.status(200).json({ status: "success" });
+  res.status(200).json({
+    status: "success",
+    message: "Conta deletada com sucesso!",
+  });
 });
 
-//////////////////////////////////////////////////////////
-// controlar acesso a rotas restritas
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
 
@@ -216,7 +330,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.cookies.jwt;
   }
 
-  if (!token) {
+  if (!token || token === "null" || token === null) {
     return next(new AppError("Você não está conectado!", 401));
   }
 
@@ -224,21 +338,28 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const currentUser = await Usuario.findOne({
     where: {
-      id: decoded.id,
+      id_usuario: decoded.id,
     },
   });
 
-  if (!currentUser) {
+  if (!currentUser || Date.now() < decoded.exp) {
     return next(new AppError("Você não está conectado!", 401));
   }
 
-  // verificar se a senha foi alterada e, caso tenha sido, comparar a timestamp iat do JWT com Date.now()
-  // if (currentUser.passwordChange && currentUser.passwordChange < Date.now()) {
-  //   return next(new AppError("Você não está conectado!", 401));
-  // }
+  if (
+    currentUser.dataValues.dtSenhaAlter &&
+    decoded.iat < currentUser.dataValues.dtSenhaAlter
+  ) {
+    return next(new AppError("Você não está conectado!", 401));
+  }
 
-  // // permitir acesso
   req.user = currentUser;
-  console.log(req.user);
   next();
 });
+
+exports.restrictAdmin = (req, res, next) => {
+  if (!req.user.dataValues.isAdmin) {
+    return next(new AppError("Acesso não autorizado!", 403));
+  }
+  next();
+};

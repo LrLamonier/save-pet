@@ -4,21 +4,18 @@ const fs = require("fs");
 const path = require("path");
 var Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
+const env =
+  JSON.stringify(process.env.NODE_ENV).replace(" ", "").replace(/["]/g, "") ||
+  "development";
 const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
 fs.readdirSync(__dirname)
   .filter((file) => {
@@ -29,9 +26,10 @@ fs.readdirSync(__dirname)
   .forEach((file) => {
     const model = require(path.join(__dirname, file))(
       sequelize,
-      Sequelize.DataTypes
+      Sequelize.DataTypes,
+      sequelize.models
     );
-    if (typeof model != "function") return;
+    if (typeof model !== "function") return;
     db[model.name] = model;
   });
 

@@ -2,22 +2,25 @@
   "development": {
     "username": "root",
     "password": "1234",
-    "database": "savepet_db",
+    "database": "savepet_db_03",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": true
   },
   "test": {
     "username": "root",
     "password": "1234",
-    "database": "savepet_db",
+    "database": "savepet_db_03",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": true
   },
   "production": {
     "username": "root",
     "password": "1234",
-    "database": "savepet_db",
+    "database": "savepet_db_03",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": true
   }
 }

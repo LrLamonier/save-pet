@@ -1,19 +1,41 @@
-// const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const { Usuario } = require("../models");
+const AppError = require("../utils/appError");
 
-//////////////////////////////////////////////////////////
-// buscar todos os usuários
 exports.allUsers = catchAsync(async (req, res, next) => {
-  const allUsers = await Usuario.findAll();
-  console.log(allUsers);
+  const users = await Usuario.findAll();
+
+  const usersRes = users.map((u) => {
+    return {
+      id_usuario: u.id_usuario,
+      nome: u.nome,
+      email: u.email,
+      contato: u.contato,
+      cpf: u.cpf,
+      cnpj: u.cnpj,
+      isAdmin: u.isAdmin,
+    };
+  });
+
   res.status(200).json({
     status: "success",
+    data: usersRes,
   });
 });
 
-//////////////////////////////////////////////////////////
-// editar perfil
+exports.myProfile = (req, res, next) => {
+  const { nome, email, contato, cpf, cnpj } = req.user.dataValues;
+
+  const id = cpf ? { cpf } : { cnpj };
+
+  res.status(200).json({
+    nome,
+    email,
+    contato,
+    id,
+  });
+};
+
 exports.editProfile = catchAsync(async (req, res, next) => {
   const { nome, email, contato } = req.body;
 
@@ -22,25 +44,34 @@ exports.editProfile = catchAsync(async (req, res, next) => {
   if (nome) {
     updatedUser.nome = nome;
   }
-  if (email) {
-    updatedUser.email = email;
-  }
   if (contato) {
     updatedUser.contato = contato;
   }
 
-  const user = await Usuario.findOne({
-    where: {
-      id: req.user.dataValues.id,
-    },
-  });
+  req.user.set(updatedUser);
 
-  user.set(updatedUser);
-
-  await user.save();
+  await req.user.save();
 
   res.status(200).json({
     status: "success",
     usuario: updatedUser,
+  });
+});
+
+exports.getUserByID = catchAsync(async (req, res, next) => {
+  const user = await Usuario.findOne({
+    where: {
+      id_usuario: req.params.id,
+    },
+  });
+
+  if (!user) {
+    return next(new AppError("Usuário não encontrado!", 404));
+  }
+
+  res.status(200).json({
+    nome: user.nome,
+    email: user.email,
+    contato: user.contato,
   });
 });
