@@ -2,12 +2,12 @@
 
 ## Conteúdo
 
-- [A ideia](##-A-ideia)
-- [Funcionalidades](##-Funcionalidades)
-- [Integração com outros serviços](##-Integração-com-outros-serviços)
-- [Quickstart](##-Quickstart)
-- [Endpoints](##-Endpoints)
-- [A equipe](##-A-equipe)
+- [A ideia](#a-ideia)
+- [Funcionalidades](##funcionalidades)
+- [Integração com outros serviços](#integração-com-outros-serviços)
+- [Quickstart](##quickstart)
+- [Endpoints](##endpoints)
+- [A equipe](##a-equipe)
 
 ## A ideia
 
@@ -17,7 +17,7 @@
 
 Os usuários conseguem se cadastrar fornecendo um endereço de email válido, um número de telefone para contato e um documento de identificação válido, CPF para usuários regulares e CNPJ para ONGs, clínicas/hospitais veterinários ou outras entidades.
 
-Os dados do usuário, com exceção do endereço de email e do documento de identificação, podem ser alterados, desde que o usuário esteja autenticado (mais detalhes em [autenticação via JWT](#-autenticação-via-jwt)).
+Os dados do usuário, com exceção do endereço de email e do documento de identificação, podem ser alterados, desde que o usuário esteja autenticado (mais detalhes em [autenticação via JWT](#autenticação-via-jwt)).
 
 ## Segurança
 
