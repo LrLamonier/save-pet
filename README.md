@@ -26,7 +26,7 @@ Os _tokens_ levam a _tag_ [HttpOnly](https://owasp.org/www-community/HttpOnly)
 com o objetivo de mitigar o risco do _cookie_ ser comprometido no lado do
 cliente.
 
-![Usuário autenticado com sucesso.](./readme-imgs/autenticacao/autenticacao_sucesso.png)
+![Usuário autenticado com sucesso.](./readme-imgs/autenticacao_sucesso.png)
 Token JWT gerado com propriedades ID do usuário, _issued at_ e _timestamp_ de
 expiração.
 
