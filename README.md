@@ -26,7 +26,7 @@ Os _tokens_ levam a _tag_ [HttpOnly](https://owasp.org/www-community/HttpOnly)
 com o objetivo de mitigar o risco do _cookie_ ser comprometido no lado do
 cliente.
 
-![Usuário autenticado com sucesso.](./readme-imgs/autenticacao/sucesso.png)
+![Usuário autenticado com sucesso.](./readme-imgs/autenticacao/autenticacao_sucesso.png)
 Token JWT gerado com propriedades ID do usuário, _issued at_ e _timestamp_ de
 expiração.
 
@@ -75,7 +75,7 @@ detalhes em [segurança](###-Segurança)).
 A SavePet segue o paradigma de manuseio de erros de passar os erros para a
 função `next()` ao invés de `throw new Error`.
 
-![Função de criação de novo usuário que retorna um erro caso o endereço de email já esteja cadastrado](./readme-imgs/erro_next/png)
+![Função de criação de novo usuário que retorna um erro caso o endereço de email já esteja cadastrado](./readme-imgs/erro_next.png)
 A função de criação de novo usuário, por exemplo, retorna um erro notificando o
 usuário que o email inserido já está cadastrado.
 
@@ -128,8 +128,8 @@ _stack_ do erro. A função `Error.captureStackTrace(this, this.constructor)`
 adiciona ao objeto de erro a stack de funções que foram invocadas até a função
 onde o erro ocorreu. O que facilita identificar onde o problema ocorreu.
 
-![Erro em desenvolvimento](./readme-imgs/erro_desenvolvimento) Exemplo de erro
-em desenvolvimento mostrando o _stack_ de funções.
+![Erro em desenvolvimento](./readme-imgs/erro_desenvolvimento.png) Exemplo de
+erro em desenvolvimento mostrando o _stack_ de funções.
 
 Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_ENV`,
 a aplicação irá executar por padrão no modo produção.
