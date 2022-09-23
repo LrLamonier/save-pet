@@ -22,7 +22,7 @@
  
 </div>
 
-## Conteúdo :paw_prints:
+## Conteúdo 
 
 - [A ideia](#a-ideia)
 - [Funcionalidades](#funcionalidades)
@@ -65,11 +65,11 @@
         - [Meus chamados](#meus-chamados-requer-jwt-válido)
 - [A equipe](#a-equipe)
 
-## A ideia :paw_prints:
+## A ideia 
 
 Olá! Somos a SavePet. Nosso objetivo é auxiliar animais em vulnerabilidade (ex. abandonados, machucados, doentes, maus tratos) por resgatar esses animais aonde estiverem, por acionar a instituição/ongs/pessoas para que essa possa fazer o resgate do animal e registre o status da ocorrencia. Se o animal estiver ferido/precisando de ajuda medica passará primeiro por cuidados antes de ser liberado para adoção, senão será encaminhado para a lista de adoção. Também contamos com a opção de cadastrar animais pra adoção ou se voluntariar pra adotar algum deles (da instituição ou cadastrado por outros).
 
-## Funcionalidades :paw_prints:
+## Funcionalidades 
 
 ### Criação e administração de conta	
 
@@ -94,9 +94,9 @@ Exemplo de um _request_ de criação do chamado mostrando as coordenadas no padr
 
 Um chamado pode ter suas informações alteradas pelo usuário que o criou ou por um usuário especial com o cargo de administrador. Da mesma forma, o criador ou administrador pode sinalizar o chamado como finalizado quando a situação tiver sido resolvida. Um chamado finalizado também pode ser reaberto em até 48 horas após ter sido finalizado.
 
-## Segurança :paw_prints:
+## Segurança 
 
-### Autenticação via JWT :paw_prints:
+### Autenticação via JWT 
 
 A API SavePet utuliza [JSON _Web Tokens_](https://jwt.io/) via _cookie_ como forma de autenticar os usuários e permitir acesso seletivo a rotas restritas. Essa abordagem está alinhada com a proposta de um servidor [_stateless_](https://stackoverflow.com/a/5539862).
 
@@ -221,7 +221,7 @@ alter table adocao add column id_usuario_adocao int;
 alter table adocao add foreign key(id_usuario_adocao) references usuarios(id_usuario);
 ```
 
-## Integração com outros serviços :paw_prints:
+## Integração com outros serviços 
 
 A SavePet foi desenvolvida tendo em mente a integração com serviços que possibilitam a autenticação em duas etapas. Os _tokens_ de recuperação de senha e de exclusão de conta devem ser enviados para o usuário através de um canal que podemos assumir ser seguro.
 
@@ -232,7 +232,7 @@ Essa estratégia de autenticação parte do pressuposto que o email e/ou número
 
 Existem centenas de serviços com os mais variados preços, dependendo do volume de mensagens e por onde elas são enviadas. Uma boa opção gratuita é o [SendGrid](https://sendgrid.com/), que possui planos gratuitos que atendem confortavelmente aplicações pequenas.
 
-## Quickstart :paw_prints:
+## Quickstart 
 
 ### 1. Obter o código
 
@@ -316,7 +316,7 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
 
 - O Heroku é totalmente compatível com aplicações Node e o _deploy_ pode ser feito via Git. Informações detalhadas [aqui](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
 
-## Endpoints :paw_prints:
+## Endpoints 
 
 Caso esteja usando Postman, pegue os arquivos das rotas pré-configuardos [aqui](https://github.com/LrLamonier/save-pet/tree/main/postman).
 
@@ -873,7 +873,7 @@ Exemplo _response_:
 }
 ```
 
-## Kanban :paw_prints:
+## Kanban 
 Kanban é um sistema visual de gestão de trabalho, que busca conduzir cada tarefa por um fluxo predefinido de trabalho.
 Em geral, o conceito de Kanban pode ser definido pelos seguintes itens:
 O sistema visual: um processo, definido em um quadro com colunas de separação, que permite dividir o trabalho em segmentos ou pelo seu status, fixando cada item em um cartão e colocando em uma coluna apropriada para indicar onde ele está em todo o fluxo de trabalho. 
@@ -900,7 +900,7 @@ O Kanban pode ser considerado também como uma metodologia ágil exatamente por 
 Segue nosso projeto utlizando metodologia Kanban no Trello - https://trello.com/b/T1BPg1o5/save-pet
 
 
-## Equipe :paw_prints:
+## Equipe 
 Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
 Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
 - ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
