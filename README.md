@@ -179,7 +179,7 @@ Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_EN
 Imagem dos objetos do banco de dados:
 
 ![Banco de dados](./readme-imgs/savepet_db.png)<br>
-Para criar as tabelas previamente no banco é necessário está com o Mysql instalando e rodando. Executando o script abaixo criamos todos os objetos do banco.
+Para criar as tabelas previamente no banco é necessário estar com o Mysql instalando e rodando. Executando o script abaixo criamos todos os objetos do banco.
 ```sql
 # Criar banco 
 CREATE DATABASE savepet_db;
