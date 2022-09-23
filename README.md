@@ -24,6 +24,7 @@
 
 ## Conteúdo 
 
+- [A equipe](#a-equipe)
 - [A ideia](#a-ideia)
 - [Funcionalidades](#funcionalidades)
     - [Criação e administração de conta](#criação-e-administração-de-conta)
@@ -63,7 +64,15 @@
         - [Buscar chamados por ID de usuário](#buscar-chamados-por-id-de-usuário)
         - [Buscar todos os chamados](#buscar-todos-os-chamados)
         - [Meus chamados](#meus-chamados-requer-jwt-válido)
-- [A equipe](#a-equipe)
+
+## Equipe 
+- ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
+- ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
+- ``Vando Rocha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Vandorc-Dev)
+- ``Gisele Souza (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/giselessouza)
+
+Instrutor:
+- `` Jenifer Placido `` 
 
 ## A ideia 
 
@@ -874,6 +883,7 @@ Exemplo _response_:
 }
 ```
 
+<<<<<<< HEAD
 ## Equipe 
 - ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
 - ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
@@ -882,3 +892,6 @@ Exemplo _response_:
 
 Instrutor:
 - `` Jenifer Placido `` 
+=======
+[Voltar para o topo](#conteúdo)
+>>>>>>> 2eaeb63825fcf242e24b160266ef78089b080359
