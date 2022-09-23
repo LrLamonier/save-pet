@@ -6,7 +6,7 @@
 - [Funcionalidades](##-Funcionalidades)
 - [Integração com outros serviços](##-Integração-com-outros-serviços)
 - [Quickstart](##-Quickstart)
-- [Endpoints](#endpoints)
+- [Endpoints](##-Endpoints)
 - [A equipe](##-A-equipe)
 
 ## A ideia
@@ -17,14 +17,18 @@
 
 ### Autenticação via JWT
 
-A API SavePet utuliza [JSON _Web Tokens_](https://jwt.io/) como forma de
-autenticar os usuários e permitir acesso seletivo a rotas restritas. Essa
-abordagem está alinhada com a proposta de um servidor
+A API SavePet utuliza [JSON _Web Tokens_](https://jwt.io/) via _cookie_ como
+forma de autenticar os usuários e permitir acesso seletivo a rotas restritas.
+Essa abordagem está alinhada com a proposta de um servidor
 [_stateless_](https://stackoverflow.com/a/5539862).
 
 Os _tokens_ levam a _tag_ [HttpOnly](https://owasp.org/www-community/HttpOnly)
 com o objetivo de mitigar o risco do _cookie_ ser comprometido no lado do
 cliente.
+
+![Usuário autenticado com sucesso.](./readme-imgs/autenticacao/sucesso.png)
+Token JWT gerado com propriedades ID do usuário, _issued at_ e _timestamp_ de
+expiração.
 
 Ao tentar acessar uma rota restrita, o JWT é identificado no _request_ e
 validado. Após identificar o usuário no banco de dados, a _timestamp_ de emissão
@@ -32,7 +36,9 @@ do _token_ é comparada com a _timestamp_ da última troca de senha do usuário.
 caso de comprometimento da conta e subsequente troca de senha por parte do
 usuário, todos os _tokens_ emitidos antes da troca se tornam inválidos.
 
-![Falha na autenticação](./readme-imgs/autenticacao_falha.png)
+![Falha na autenticação](./readme-imgs/autenticacao_falha.png) Falha na
+autenticação por qualquer motivo, como _cookie_ expirado, retorna em um erro
+genérico.
 
 ### Sanitização e validação de dados
 
@@ -64,18 +70,28 @@ passam por um processo de _hashing_ e _salting_ através da biblioteca
 proteger _tokens_ de troca/recuperação de senha e deleção de conta (mais
 detalhes em [segurança](###-Segurança)).
 
-### _Error handling_
+### _Error handling_ em produção
 
 A SavePet segue o paradigma de manuseio de erros de passar os erros para a
 função `next()` ao invés de `throw new Error`.
 
+![Função de criação de novo usuário que retorna um erro caso o endereço de email já esteja cadastrado](./readme-imgs/erro_next/png)
+A função de criação de novo usuário, por exemplo, retorna um erro notificando o
+usuário que o email inserido já está cadastrado.
+
 Para lidar com erros nesse modelo, primeiro criamos uma classe de erro
-customizada, a qual foi dado o nome de `AppError`, que _extends_ a classe
+customizada, à qual foi dado o nome de `AppError`, que _extends_ a classe
 `Error` padrão do JavaScript. A diferença dessa nova classe para a original é
 que ela adiciona um atributo que indica que esse erro é operacional.
 
+![Classe AppError](./readme-imgs/erro_apperror.png) Classe AppError.
+`Error.captureStackTrace(this, this.constructor)` explicada logo abaixo.
+
 Em seguida, criamos a função de _global error handling_ que verifica se o erro é
 operacional.
+
+![Global Error Handler](./readme-imgs/erro_global_error_handler.png) _Global
+error handler_, função com 4 parâmetros.
 
 Se o erro for operacional, é encaminhado para o usuário somente o código de
 _status_ HTTP e a mensagem personalizada que foi escrita na hora que o objeto
@@ -84,10 +100,39 @@ _status_ HTTP e a mensagem personalizada que foi escrita na hora que o objeto
 Em caso de erro decorrente de falhas no código, o usuário recebe somente um erro
 genérico com código HTTP 500 e uma mensagem de que algo deu errado.
 
+![Envio do erro para o usuário](./readme-imgs/erro_senderrorprod.png)
+
 Toda essa estratégia garante que, em caso de erro, o usuário receberá uma
 resposta que descreve exatamente o que aconteceu ou uma resposta genérica quando
 o erro for um _bug_. Não vazar na resposta o _stack_ do erro é crucial para que
 o funcionamento interno da API não seja exposto.
+
+### _Error handling_ em desenvolvimento
+
+Para facilitar o processo de desenvolvimento da aplicação a função global de
+erro verifica se a variável ambiental `NODE_ENV` está definida como `production`
+ou `development`. Caso o ambiente seja de produção, a entrega de erros acontece
+conforme descrito acima. No entanto, para ajudar no processo de _debugging_, um
+outro controlador de erro é invocado caso o ambiente esteja definido como
+desenvolvimento.
+
+Para definir em qual ambiente a aplicação iniciará, utilize os _scripts_
+`npm run start:dev` e `npm run start:prod` para iniciar em modo de
+desenvolvimento e produção, respectivamente.
+
+![Envio de erros em desenvolvimento](./readme-imgs/erro_senderrordev.png) Função
+de envio de erros em desenvolvimento.
+
+Essa resposta inclui o código HTTP, o erro em si, a mensagem e mais importante a
+_stack_ do erro. A função `Error.captureStackTrace(this, this.constructor)`
+adiciona ao objeto de erro a stack de funções que foram invocadas até a função
+onde o erro ocorreu. O que facilita identificar onde o problema ocorreu.
+
+![Erro em desenvolvimento](./readme-imgs/erro_desenvolvimento) Exemplo de erro
+em desenvolvimento mostrando o _stack_ de funções.
+
+Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_ENV`,
+a aplicação irá executar por padrão no modo produção.
 
 ## O banco de dados
 
@@ -101,15 +146,3 @@ uma camada a mais de segurança na
 ## Endpoints
 
 ## A equipe
-
-### Kanban
-
-https://www1.folha.uol.com.br/cotidiano/2022/08/numero-de-animais-abandonados-cresce-mas-adocao-nao-acompanha.shtml
-https://www1.folha.uol.com.br/blogs/bom-pra-cachorro/2022/06/censo-pet-caes-lideram-ranking-de-animais-de-estimacao-gatos-tem-alta.shtml
-https://portal.al.go.leg.br/noticias/125409/projeto-que-propoe-mudar-cenario-de-animais-abandonados-aguarda-votacao-na-ccj#:~:text=De%20acordo%20com%20a%20Organiza%C3%A7%C3%A3o,cinco%20habitantes%20h%C3%A1%20um%20cachorro.
-
-## Backlog
-
-upload fotos
-
-## Agradecimentos

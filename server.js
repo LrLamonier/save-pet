@@ -7,13 +7,18 @@ process.on("uncaughtException", (err) => {
 });
 
 dotenv.config({ path: "./config.env" });
-const environment = process.env.NODE_ENV.replace(" ", "") || "development";
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = "production";
+}
+if (process.env.NODE_ENV.replace(" ", "") === "development") {
+  process.env.NODE_ENV = "development";
+}
 
 const app = require("./app");
 
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
-  console.log(`App running on port ${port} on ${environment} mode...`);
+  console.log(`App running on port ${port} on ${process.env.NODE_ENV} mode...`);
 });
 
 process.on("unhandledRejection", (err) => {
