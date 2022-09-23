@@ -13,6 +13,12 @@
 
 ## Funcionalidades
 
+### Criação e administração de usuários
+
+Os usuários conseguem se cadastrar fornecendo um endereço de email válido, um número de telefone para contato e um documento de identificação válido, CPF para usuários regulares e CNPJ para ONGs, clínicas/hospitais veterinários ou outras entidades.
+
+Os dados do usuário, com exceção do endereço de email e do documento de identificação, podem ser alterados, desde que o usuário esteja autenticado (mais detalhes em [autenticação via JWT](#-autenticação-via-jwt)).
+
 ## Segurança
 
 ### Autenticação via JWT

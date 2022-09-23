@@ -44,9 +44,6 @@ exports.editProfile = catchAsync(async (req, res, next) => {
   if (nome) {
     updatedUser.nome = nome;
   }
-  if (email) {
-    updatedUser.email = email;
-  }
   if (contato) {
     updatedUser.contato = contato;
   }
