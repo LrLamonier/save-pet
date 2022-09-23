@@ -2,12 +2,12 @@
 
 ## Conteúdo
 
-- [A ideia](#a-ideia)
-- [Funcionalidades](##funcionalidades)
-- [Integração com outros serviços](#integração-com-outros-serviços)
-- [Quickstart](##quickstart)
-- [Endpoints](##endpoints)
-- [A equipe](##a-equipe)
+- [A ideia](##-A-ideia)
+- [Funcionalidades](##-Funcionalidades)
+- [Integração com outros serviços](##-Integração-com-outros-serviços)
+- [Quickstart](##-Quickstart)
+- [Endpoints](##-Endpoints)
+- [A equipe](##-A-equipe)
 
 ## A ideia
 
@@ -17,7 +17,21 @@
 
 Os usuários conseguem se cadastrar fornecendo um endereço de email válido, um número de telefone para contato e um documento de identificação válido, CPF para usuários regulares e CNPJ para ONGs, clínicas/hospitais veterinários ou outras entidades.
 
-Os dados do usuário, com exceção do endereço de email e do documento de identificação, podem ser alterados, desde que o usuário esteja autenticado (mais detalhes em [autenticação via JWT](#autenticação-via-jwt)).
+Os dados do usuário, com exceção do endereço de email e do documento de identificação, podem ser alterados, desde que o usuário esteja autenticado (mais detalhes em [autenticação via JWT](#-autenticação-via-jwt)).
+
+O usuário pode, ainda, recuperar a senha e excluir a própria conta. Essas duas ações, no entanto, não podem ser feitas diretamente. Para realizá-las o usuário primeiro precisa solicitar um _token_ especial para o servidor que possui um prazo de validade de 10 minutos. Um _request_ subsequente contendo o token válido confirma a ação.
+
+Os _tokens_ de recuperação de senha e de exclusão de conta precisam necessariamente serem enviados para o usuário através de um canal seguro. É comum a utilização de serviços externos de envio de emails, mensagens SMS ou mesmo mensagens em aplicativos como o WhatsApp.
+
+A sessão [integração com outros serviços](#integração-com-outros-serviços) contém mais informações sobre essas funcionalidades e como integrá-las ao SavePet.
+
+### Criação, atualização e finalização de chamados
+
+Um usuário autenticado pode criar chamados que sinalizam a ocorrência de um animal em vulnerabilidade. Para isso, um pedido deve ser feito fornecendo um título que resuma a situação sendo sinalizada, o tipo do animal em risco, uma descrição mais detalhada da situação e a localização do animal.
+
+A localização deve ser enviada no formato do padrão internacional [World Geodetic System (WGS)](https://developers.google.com/maps/documentation/javascript/coordinates) com, no mínimo, 5 casas decimais. Esse padrão foi escolhido porque é o formato utilizado pelo Google, o que facilita a integração com suas APIs.
+
+Um chamado pode ter suas informações alteradas pelo usuário que o criou ou por um usuário especial com o cargo de administrador. Da mesma forma, o criador ou administrador pode sinalizar o chamado como finalizado quando a situação tiver sido resolvida. Um chamado finalizado também pode ser reaberto em até 48 horas após ter sido finalizado.
 
 ## Segurança
 
