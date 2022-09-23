@@ -874,28 +874,6 @@ Exemplo _response_:
 }
 ```
 
-## Kanban 
-Kanban é um sistema visual de gestão de trabalho, que busca conduzir cada tarefa por um fluxo predefinido de trabalho.
-Definição do quadro trello utilizando a metodologia Kanban:
-
-
-https://trello.com/b/T1BPg1o5/save-pet
-
-### Regras de Negócio
-
-### Definindo as histórias de usuários (Levantamento dos Requisitos Necessários)
-- Como institução e/ou usuario eu gostaria de realizar o meu cadastro ou login para que possa ter acesso ao sistema	
-- Como usuário eu gostaria de registrar uma ocorrencia para que a instituição possa fazer o resgate do animal	
-- Como instituição eu gostaria de verificar a solicitação de resgate para que o animal possa ser resgatado	
-- Como instituição eu gostaria de alterar o resigtro da ocorrencia para que a situação do animal seja atualizada	
-- Como usuario eu gostaria de ter acesso ao status da ocorrencia para saber a situação do animal	
-- Como instituição eu gostaria de adicionar o animal para adoção para que ele possa ficar disponivel para ser adotado	
--  Como usuario eu gostaria de me cadastrar na lista de adoção para poder me voluntariar a adoção	
-- Como usuario eu gostaria de alterar meu cadastro na lista de adoção para poder me inativar/desligar da lista se assim for necessario	
-- Como usuario eu gostaria de cadastrar um animal (próprio) na adoção (só em caso de desfazer-se do animal) para ele ficar disponivel aos voluntarios	
-- Como usuario eu gostaria de alterar o resigtro do cadastro do meu animal para que a situação de adoção seja atualizada	
-- Como instituição e/ou gostaria de excluir um animal da lista de adoção quando esse for adotado para não ficar mais disponivel	
-
 ## Equipe 
 - ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
 - ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
