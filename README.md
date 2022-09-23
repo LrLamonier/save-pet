@@ -2,18 +2,27 @@
 
 ## Conteúdo
 
-- [A ideia](##-A-ideia)
-- [Funcionalidades](##-Funcionalidades)
-- [Integração com outros serviços](##-Integração-com-outros-serviços)
-- [Quickstart](##-Quickstart)
-- [Endpoints](##-Endpoints)
-- [A equipe](##-A-equipe)
+- [A ideia](#a-ideia)
+- [Funcionalidades](#funcionalidades)
+    - [Criação e administração de conta](#criação-e-administração-de-conta)
+    - [Criação, atualização e finalização de chamados](#criação-atualização-e-finalização-de-chamados)
+- [Segurança](#segurança)
+    - [Autenticação via JWT](#autenticação-via-JWT)
+    - [Sanitização e validação de dados](#sanitização-e-validação-de-dados)
+    - [Armazenamento de informações sensíveis](#armazenamento-de-informações-sensíveis)
+    - [_Error handling_ em produção](#error-handling-em-produção)
+    - [_Error handling_ em desenvolvimento](#error-handling-em-desenvolvimento)
+- [O banco de dados](#o-banco-de-dados)
+- [Integração com outros serviços](#integração-com-outros-serviços)
+- [Quickstart](#quickstart)
+- [Endpoints](#endpoints)
+- [A equipe](#a-equipe)
 
 ## A ideia
 
 ## Funcionalidades
 
-### Criação e administração de usuários
+### Criação e administração de conta
 
 Os usuários conseguem se cadastrar fornecendo um endereço de email válido, um número de telefone para contato e um documento de identificação válido, CPF para usuários regulares e CNPJ para ONGs, clínicas/hospitais veterinários ou outras entidades.
 
@@ -30,6 +39,9 @@ A sessão [integração com outros serviços](#integração-com-outros-serviços
 Um usuário autenticado pode criar chamados que sinalizam a ocorrência de um animal em vulnerabilidade. Para isso, um pedido deve ser feito fornecendo um título que resuma a situação sendo sinalizada, o tipo do animal em risco, uma descrição mais detalhada da situação e a localização do animal.
 
 A localização deve ser enviada no formato do padrão internacional [World Geodetic System (WGS)](https://developers.google.com/maps/documentation/javascript/coordinates) com, no mínimo, 5 casas decimais. Esse padrão foi escolhido porque é o formato utilizado pelo Google, o que facilita a integração com suas APIs.
+
+![Exemplo de criação de chamado](./readme-imgs/chamado_exemplo.png)<br>
+Exemplo de um _request_ de criação do chamado mostrando as coordenadas no padrão WGS.
 
 Um chamado pode ter suas informações alteradas pelo usuário que o criou ou por um usuário especial com o cargo de administrador. Da mesma forma, o criador ou administrador pode sinalizar o chamado como finalizado quando a situação tiver sido resolvida. Um chamado finalizado também pode ser reaberto em até 48 horas após ter sido finalizado.
 
@@ -107,7 +119,14 @@ Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_EN
 
 ## Integração com outros serviços
 
-A SavePet foi desenvolvida tendo em mente a integração com serviços que permitem uma camada a mais de segurança na 
+A SavePet foi desenvolvida tendo em mente a integração com serviços que possibilitam a autenticação em duas etapas. Os _tokens_ de recuperação de senha e de exclusão de conta devem ser enviados para o usuário através de um canal que podemos assumir ser seguro.
+
+![Resposta do servidor contendo um _token_ de recuperação de senha](./readme-imgs/integracao_token.png)<br>
+Acima um exemplo de resposta contendo um token de recuperação de senha. O código neste repositório envia o token diretamente na resposta, o que é uma falha crítica de segurança. Quando for colocar essa API em produção, siga os passos descritos em [integrar serviço de autenticação em duas etapas.](#integrar-serviço-de-autenticação-em-duas-etapas)
+
+Essa estratégia de autenticação parte do pressuposto que o email e/ou número de telefone do usuário são confiáveis. Com esse princípio estabelecido, a abordagem mais direta é integrar o sistema com APIs que enviam mensagens, seja por email, SMS ou através de aplicativos como o WhatsApp.
+
+Existem centenas de serviços com os mais variados preços, dependendo do volume de mensagens e por onde elas são enviadas. Uma boa opção gratuita é o [SendGrid](https://sendgrid.com/), que possui planos gratuitos que atendem confortavelmente aplicações pequenas.
 
 ## Quickstart
 
