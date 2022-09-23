@@ -875,12 +875,10 @@ Exemplo _response_:
 
 ## Kanban 
 Kanban é um sistema visual de gestão de trabalho, que busca conduzir cada tarefa por um fluxo predefinido de trabalho.
-Em geral, o conceito de Kanban pode ser definido pelos seguintes itens:
-O sistema visual: um processo, definido em um quadro com colunas de separação, que permite dividir o trabalho em segmentos ou pelo seu status, fixando cada item em um cartão e colocando em uma coluna apropriada para indicar onde ele está em todo o fluxo de trabalho. 
-Os cartões: que descrevem o trabalho real que transita por este processo.
-A limitação do trabalho em andamento: que permite atribuir os limites de quantos itens podem estar em andamento em cada segmento ou estado do fluxo de trabalho.
-Ou seja, o Kanban é um fluxo de trabalho que busca indicar (e limitar) o trabalho em andamento — ou WIP, Work In Progress.
-O Kanban pode ser considerado também como uma metodologia ágil exatamente por ter o objetivo de evitar a procrastinação e render mais no dia a dia.
+Definição do quadro trello utilizando a metodologia Kanban:
+
+
+https://trello.com/b/T1BPg1o5/save-pet
 
 ### Regras de Negócio
 
@@ -897,17 +895,15 @@ O Kanban pode ser considerado também como uma metodologia ágil exatamente por 
 - Como usuario eu gostaria de alterar o resigtro do cadastro do meu animal para que a situação de adoção seja atualizada	
 - Como instituição e/ou gostaria de excluir um animal da lista de adoção quando esse for adotado para não ficar mais disponivel	
 
-Segue nosso projeto utlizando metodologia Kanban no Trello - https://trello.com/b/T1BPg1o5/save-pet
-
-
 ## Equipe 
-Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
-Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
 - ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
 - ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
 - ``Vando Rocha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Vandorc-Dev)
 - ``Gisele Souza (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/giselessouza)
-
+ 
+## Motivação
+De acordo com a (OMS), somente no Brasil, cerca de 30 milhões de animais estão abandonados, sendo aproximadamente 20 milhões de cães e 10 milhões de gatos. Em grandes metrópoles, para cada cinco habitantes há um cachorro. Desses, 10% estão abandonados.  Em 2020, durante a pandemia, a quantidade de cães e gatos resgatados subiu 70%, segundo levantamento da Ampara Animal, associação que oferece suporte a protetores de animais. Daí nascemos nós. Somos uma entidade sem fins lucrativos que desenvolve papel fundamental na promoção do bem estar e proteção dos animais, além de conscientizar a população sobre a posse responsável de cães e gatos. Precisamos encontrar adotantes para nossos peludos e bichanos resgatados ou doados. Cumprindo essa missão, poderemos fazer mais e melhor em prol de cães e gatos abandonados.
+Nosso trabalho mantém-se unicamente por doações e trabalho voluntário. Não recebemos ajuda governamental e nem de empresas privadas. Seja nosso colaborador e faça a diferença na vida de peludos e bichanos! Sua solidariedade salva vidas.
 
 Instrutor:
 - `` Jenifer Placido `` 
