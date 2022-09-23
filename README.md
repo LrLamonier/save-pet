@@ -116,6 +116,8 @@ Exemplo de erro em desenvolvimento mostrando o _stack_ de funções.
 Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_ENV`, a aplicação irá executar por padrão no modo produção.
 
 ## O banco de dados
+Imagem do objetos do banco d dados:
+![Banco de dados](./readme-imgs/savepet_db.png)
 
 ## Integração com outros serviços
 
