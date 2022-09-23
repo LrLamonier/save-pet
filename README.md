@@ -15,6 +15,12 @@
 - [O banco de dados](#o-banco-de-dados)
 - [Integração com outros serviços](#integração-com-outros-serviços)
 - [Quickstart](#quickstart)
+    - [1. Obter o código](#1-obter-o-codigo)
+    - [2. Instalar dependências](#2-instalar-dependencias)
+    - [3. Iniciar a API no modo desenvolvimento](#3-iniciar-a-api-no-modo-desenvolvimento)
+    - [4. Testar os endpoints e o banco de dados](#4-testar-os-endpoints-e-o-banco-de-dados)
+    - [5. Integrar a API com autenticação em duas etapas](#5-integrar-a-api-com-autenticação-em-duas-etapas)
+    - [6. Deploy da aplicação](#6-deploy-da-aplicação)
 - [Endpoints](#endpoints)
 - [A equipe](#a-equipe)
 
@@ -181,7 +187,7 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
 
     ![Captura de tela das variáveis de ambiente no Postman](./readme-imgs/postman_environment.png)
 
-- A pasta `postman` possui dois arquivos no formato JSON com _requests_ pré-configurados, basta importá-los dentro do Postman.
+- A [pasta postman](https://github.com/LrLamonier/save-pet/tree/main/postman) possui dois arquivos no formato JSON com _requests_ pré-configurados, basta importá-los dentro do Postman.
 
 - Teste os endpoints.
 
@@ -208,7 +214,7 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
     - Por esse motivo é necessário seguir boas práticas para que a sua mensagem chegue no destinatário. [Aqui](https://sendgrid.com/blog/10-tips-to-keep-email-out-of-the-spam-folder/) estão algumas sugestões de boas práticas para envio de emails.
     - Existem sites que permitem que você teste o quão "_spam_" o seu email parece. Um deles é o [UnSpam](https://unspam.email/).
 
-### 6. Deploy da aplicação
+### 6. _Deploy_ da aplicação
 
 - Após testar a aplicação no modo desenvolvimento E no modo produção, é hora de colocá-la na internet.
 
@@ -216,6 +222,430 @@ Existem centenas de serviços com os mais variados preços, dependendo do volume
 
 - O Heroku é totalmente compatível com aplicações Node e o _deploy_ pode ser feito via Git. Informações detalhadas [aqui](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
 
-## Endpoints
+## _Endpoints_
+
+Caso esteja usando Postman, pegue os arquivos das rotas pré-configuardos [aqui](https://github.com/LrLamonier/save-pet/tree/main/postman).
+
+### _Endpoints_ de usuários
+
+#### Criar conta
+
+```html
+POST /usuario/signup
+```
+
+Parâmetros obrigatórios: `nome`, `email`, `tel_contato`, `cpf` OU `cnpj`, `password`, `confirmPassword`.
+
+É obrigatório enviar um CPF ou um CNPJ. O pedido retornará um erro se nenhum dos dois foi enviado ou se os dois foram enviados.
+
+Exemplo de _request_:
+
+```json
+{
+    "nome": "Lucas",
+    "email": "lucas@lucas.com",
+    "tel_contato": "12345678",
+    "cpf": "756.772.451-00",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+}
+```
+\* O número de CPF do exemplo não existe, foi gerado para testagem.
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjYzOTYwNzIzLCJleHAiOjE2NjQ4MjQ3MjN9.oTth3stMNf0VJmmnzv9WY3sCpRIYmvTr94WFj1I1TBU",
+    "data": {
+        "resUser": {
+            "name": "Lucas Lamonier",
+            "email": "lucas@lucas.com"
+        }
+    }
+}
+```
+
+#### Login
+
+```html
+POST /usuario/login
+```
+
+Parâmetros obrigatórios: `email`, `password`.
+
+Exemplo de _request_:
+
+```json
+{
+    "email": "lucas@lucas.com",
+    "password": "12345678"
+}
+```
+
+Exemplo de _response_:
+
+```html
+{
+    "status": "success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjYzOTYwNzIzLCJleHAiOjE2NjQ4MjQ3MjN9.oTth3stMNf0VJmmnzv9WY3sCpRIYmvTr94WFj1I1TBU",
+    "data": {
+        "resUser": {
+            "name": "Lucas Lamonier",
+            "email": "lucas@lucas.com"
+        }
+    }
+}
+```
+
+#### Logout
+
+```html
+POST /usuario/logout
+```
+
+Nenhum parâmetro é necessário. Simplesmente fazer um pedido GET.
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success"
+}
+```
+
+#### Alterar cadastro (requer JWT válido)
+
+```html
+PATCH /usuario/profile
+```
+
+Parâmetros opcionais: `nome`, `contato`
+
+Exemplo _request_:
+
+```json
+{
+    "nome": "Gabriel",
+    "contato": "987654321"
+}
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "usuario": {
+        "nome": "Gabriel",
+        "contato": "987654321"
+    }
+}
+```
+
+#### Solicitar deleção da conta (requer JWT válido)
+
+```http
+POST /usuario/deletar-conta
+```
+
+Parâmetro obrigátorio: `password`
+
+Mesmo estando autenticado, o  usuário precisa inserir a senha. Em caso de vazamento do JWT, usuários maliciosos não são capazes de solicitar a deleção da senha.
+
+Exemplo de _request_:
+
+```json
+{
+    "password": "12345678"
+}
+```
+
+Exemplo de _response_:
+```json
+{
+    "status": "success",
+    "deleteToken": "505b113162691459e3ab775a960dbc3c8130f578fd837db4aa95d79872fdb204"
+}
+```
+
+\* Em produção, o _token_ não seria retornado na _response_, ao invés disso, seria encaminhado via email ou por telefone.
+
+#### Deletar conta
+
+```http
+DELETE /usuario/deletar-conta
+```
+
+Nenhum parâmetro é necessário.
+
+Parâmetro obrigatório: `deleteToken`
+
+Exemplo de _request_:
+
+```json
+{
+    "status": "success",
+    "message": "Conta deletada com sucesso!"
+}
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "message": "Conta deletada com sucesso!"
+}
+```
+
+#### Solicitar alteração de senha
+
+```http
+POST /usuario/esqueci-senha
+```
+
+Parâmetro obrigatório: `email`
+
+Exemplo de _request_:
+
+```json
+{
+    "email": "lucas@lucas.com"
+}
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "message": "Um email para recuperação da senha foi enviado para este email, caso ele esteja cadastrado. O token é válido por 10 minutos.",
+    "changeToken": "1ff4f0d09b14817c818da3a90a6516448c0428fea59ef3e63920e028bba2af13"
+}
+```
+
+\* Assim como no pedido de deleção de conta, o _token_, em produção, não seria enviado na resposta.
+
+#### Alterar senha
+
+```http
+POST /usuario/esqueci-senha
+```
+
+#### Ver meu perfil (requer JWT válido)
+
+```http
+GET /usuario/profile
+```
+
+Nenhum parâmetro necessário.
+
+Exemplo de _response_:
+
+```json
+{
+    "nome": "Lucas",
+    "email": "lucas@lucas.com",
+    "contato": "12345678",
+    "id": {
+        "cpf": "75677245100"
+    }
+}
+```
+
+#### Ver todos os usuários (requer JWT válido de um usuário do tipo administrador)
+
+```html
+GET /usuario/lista-contas
+```
+
+Nenhum parâmetro é necessário.
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "id_usuario": 3,
+            "nome": "Lucas",
+            "email": "lucas@lucas.com",
+            "contato": "12345678",
+            "cpf": "75677245100",
+            "cnpj": null,
+            "isAdmin": null
+        },
+        {
+            "id_usuario": 4,
+            "nome": "Thaís",
+            "email": "thais@thais.com",
+            "contato": "12345678",
+            "cpf": null,
+            "cnpj": "87381182000176",
+            "isAdmin": null
+        },
+        ...
+}
+ ```
+
+#### Procurar usuário pelo ID
+
+```http
+GET /usuario/u/<ID do usuário>
+```
+
+O parâmetro necessário é a ID, que deve ser colocada no endereço do _request_.
+
+Exemplo de _request_:
+
+```html
+/usuario/u/3
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "nome": "Lucas",
+    "email": "lucaslucas@lucas.com",
+    "contato": "12345678"
+}
+```
+
+### _Endpoints_ de chamados
+
+#### Criar novo chamado (requer JWT válido)
+
+```http
+POST /chamados/meus-chamados
+```
+
+Parâmetros obrigatórios: `titulo`, `tipoPet`, `descricao`, `local`
+
+O parâmetro `local` deve seguir o padrão internacional WGS com no mínimo 5 casas decimais. Mais detalhes na sessão de [funcionalidades](#criação-atualização-e-finalização-de-chamados).
+
+Exemplo de _request_:
+
+```json
+{
+    "titulo": "Cachorro na rua São Jorge",
+    "tipoPet": "Cachorro",
+    "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+    "local": "-16.719490527908334, -49.19679150458935"
+}
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "data": {
+        "id_chamado": 10,
+        "titulo": "Cachorro na rua São Jorge",
+        "tipoPet": "Cachorro",
+        "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+        "local": "-16.719490527908334,-49.19679150458935",
+        "dtAbertura": 1663964102152,
+        "id_usuario_chamado": 9
+    }
+}
+```
+
+\* Ao objeto do novo chamado é adicionado a _timestamp_ de criação e a ID do usuário que o criou.
+
+#### Editar chamado (requer JWT válido do usuário que criou o chamado ou de um administrador)
+
+```http
+PATCH /chamados/meus-chamados
+```
+
+Parâmetro obrigatório: `id_chamado`
+Parâmetros opcionais: `titulo`, `tipoPet`, `descricao`, `local`
+
+Exemplo _request_:
+
+```json
+{
+    "id_chamado": "11",
+    "descricao": "Gato preto avistado na rua São Jorge."
+}
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "chamadoAtualizado": {
+        "descricao": "Gato preto avistado na rua São Jorge."
+    }
+}
+```
+
+#### Deletar chamado (requer JWT válido do usuário que criou o chamado ou de um administrador)
+
+```http
+DELETE /chamados/meus-chamados
+```
+
+Parâmetro obrigatório: `id_chamado`
+
+Exemplo de _request_:
+
+```json
+{
+    "id_chamado": "8"
+}
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "message": "Chamado deletado com sucesso!"
+}
+```
+
+#### Buscar chamados por ID de usuário
+
+```html
+GET /usuario/chamados/usuario/<ID do usuário>
+```
+
+Parâmetro obrigatório: ID do usuário inserida diretamente na URL.
+
+Exemplo de _request_:
+
+```html
+/usuario/usuario/9
+```
+
+Exemplo de _response_:
+
+```json
+{
+    "status": "success",
+    "results": 1,
+    "chamados": [
+        {
+            "id_chamado": 10,
+            "titulo": "Cachorro na rua São Jorge",
+            "tipoPet": "Cachorro",
+            "descricao": "Cachorro preto de porte médio mancando avistado na rua São Jorge",
+            "local": "-16.719490527908334,-49.19679150458935",
+            "dtAbertura": "1663964102152",
+            "concluido": false,
+            "dtConclusao": null,
+            "id_usuario_chamado": 9
+        }
+    ]
+}
+```
+
+#### Buscar todos os chamados
 
 ## A equipe
