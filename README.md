@@ -22,6 +22,15 @@
  
 </div>
 
+## Equipe 
+- ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
+- ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
+- ``Vando Rocha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Vandorc-Dev)
+- ``Gisele Souza (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/giselessouza)
+
+Instrutor:
+- `` Jenifer Placido `` 
+
 ## Conteúdo 
 
 - [A equipe](#a-equipe)
@@ -883,20 +892,6 @@ Exemplo _response_:
 }
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-## Equipe 
-- ``Lucas Lamonier (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Llpampolha/)
-- ``Lucas Pampolha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in/) ou [Github](https://github.com/lpampolha) 
-- ``Vando Rocha (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/Vandorc-Dev)
-- ``Gisele Souza (Back-end | JavaScript | NodeJS | ExpressJS)`` [Linkedin](https://www.linkedin.com/in//) ou [Github](https://github.com/giselessouza)
-
-Instrutor:
-- `` Jenifer Placido `` 
-=======
-[Voltar para o topo](#conteúdo)
->>>>>>> 2eaeb63825fcf242e24b160266ef78089b080359
-=======
 ## Informações adicionais
 
 A API SavePet está preparada para lidar com erros críticos.
@@ -908,4 +903,3 @@ Por fim, a aplicação é capaz de responder adequadamente a SIGTERMs.
 ![Função de SIGTERM](./readme-imgs/finish_sigterm.png)
 
 [Voltar para o topo](#conteúdo)
->>>>>>> 625c997155e1dc6d68c932c663ab32e99eb87908
