@@ -182,7 +182,7 @@ Essa resposta inclui o código HTTP, o erro em si, a mensagem e mais importante 
 Exemplo de erro em desenvolvimento mostrando o _stack_ de funções.
 
 ![Erro em produção](./readme-imgs/erro_producao.png)<br>
-Exemplo de erro em produção que exibe somente o estritamente necessário para que o usuário entenda o problema retornado.
+Exemplo do mesmo erro, só que em produção, exibindo somente o estritamente necessário para que o usuário entenda o problema retornado.
 
 Por motivos de segurança, caso não seja fornecido um valor válido de `NODE_ENV`, a aplicação irá executar por padrão no modo produção.
 
