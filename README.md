@@ -346,7 +346,7 @@ Caso esteja usando Postman, pegue os arquivos das rotas pré-configuardos [aqui]
 
 #### Criar conta
 
-```html
+```http
 POST /usuario/signup
 ```
 
@@ -385,7 +385,7 @@ Exemplo de _response_:
 
 #### Login
 
-```html
+```http
 POST /usuario/login
 ```
 
@@ -402,7 +402,7 @@ Exemplo de _request_:
 
 Exemplo de _response_:
 
-```html
+```json
 {
     "status": "success",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjYzOTYwNzIzLCJleHAiOjE2NjQ4MjQ3MjN9.oTth3stMNf0VJmmnzv9WY3sCpRIYmvTr94WFj1I1TBU",
@@ -417,7 +417,7 @@ Exemplo de _response_:
 
 #### Logout
 
-```html
+```http
 POST /usuario/logout
 ```
 
@@ -433,7 +433,7 @@ Exemplo de _response_:
 
 #### Alterar cadastro (requer JWT válido)
 
-```html
+```http
 PATCH /usuario/profile
 ```
 
@@ -479,6 +479,7 @@ Exemplo de _request_:
 ```
 
 Exemplo de _response_:
+
 ```json
 {
     "status": "success",
@@ -573,7 +574,7 @@ Exemplo de _response_:
 
 #### Ver todos os usuários (requer JWT válido de um usuário do tipo administrador)
 
-```html
+```http
 GET /usuario/lista-contas
 ```
 
@@ -617,7 +618,7 @@ O parâmetro necessário é a ID, que deve ser colocada no endereço do _request
 
 Exemplo de _request_:
 
-```html
+```http
 /usuario/u/3
 ```
 
@@ -728,7 +729,7 @@ Exemplo de _response_:
 
 #### Buscar chamados por ID de usuário
 
-```html
+```http
 GET /usuario/chamados/usuario/<ID do usuário>
 ```
 
@@ -736,7 +737,7 @@ Parâmetro obrigatório: ID do usuário inserida diretamente na URL.
 
 Exemplo de _request_:
 
-```html
+```http
 /usuario/usuario/9
 ```
 
@@ -764,7 +765,7 @@ Exemplo de _response_:
 
 #### Buscar todos os chamados
 
-```html
+```http
 GET /chamados
 ```
 
@@ -772,7 +773,7 @@ A rota para buscar todos os chamados possui um parâmetro opcional que indica a 
 
 A localização do usuário deve ser passada via _query string_ no [padrão WGS](#criação-atualização-e-finalização-de-chamados) com, no mínimo, 5 casas decimais:
 
-```html
+```http
 GET /chamados?loc=<Coordenadas do usuário>
 ```
 
@@ -780,7 +781,7 @@ Caso as coordenadas passadas na _query string_ não sejam válidas, a ordenaçã
 
 Exemplo de _request_:
 
-```html
+```http
 GET /chamados?loc=-16.68087323800827, -49.2556861602635
 ```
 
@@ -868,7 +869,7 @@ Exemplo com coordenadas (os títulos se referem à distância, 1 para menor, 3 p
 
 #### Meus chamados (requer JWT válido)
 
-```html
+```http
 GET /chamados/meus-chamados
 ```
 
